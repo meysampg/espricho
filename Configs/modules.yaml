@@ -1,0 +1,8 @@
+#modules:
+#  name:
+#    folder: filan
+#    route_prefix: filan
+#    modules:
+#      name2:
+#        folder: filan2
+#        route_prefix: filan2

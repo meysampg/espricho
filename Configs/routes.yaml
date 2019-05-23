@@ -1,0 +1,6 @@
+# here are general routes of the application. If you wanna define a specified module
+# route, you can define it in `routes.yaml` inside the `Configs` directory of the module.
+#index:
+#  path: /
+#  controller: MainController::index
+#  methods: GET|HEAD

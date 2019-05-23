@@ -1,0 +1,93 @@
+<?php
+
+/**
+ * fire composer autoloader!
+ */
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use Espricho\Components\Http\HttpKernel;
+use Espricho\Components\Routes\RoutesLoader;
+use Symfony\Component\Routing\RequestContext;
+use Espricho\Components\Application\Application;
+use Espricho\Components\Configs\ConfigCollection;
+use Symfony\Component\Routing\Matcher\UrlMatcher;
+use Espricho\Components\Contracts\KernelInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\DependencyInjection\Reference;
+use Espricho\Components\Configs\ConfigurationsLoader;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
+use Symfony\Component\HttpKernel\Controller\ControllerResolver;
+
+/**
+ * The directory separator
+ *
+ * @var string
+ */
+$ds = DIRECTORY_SEPARATOR;
+
+/**
+ * load application configurations
+ *
+ * @var $configs ConfigCollection
+ */
+$configs = (new ConfigurationsLoader(
+     __DIR__ . "{$ds}..{$ds}Configs",
+     ['db.yaml', 'modules.yaml']
+))->load();
+
+/**
+ * fetch routes
+ */
+$routes = (new RoutesLoader(
+     __DIR__ . "{$ds}..{$ds}Configs",
+     'routes.yaml',
+     $configs
+))->load();
+
+/**
+ * Create the application!
+ */
+$app = new Application($configs);
+
+/**
+ * Register kernel dependencies
+ */
+$app->register('context', RequestContext::class);
+$app->register('matcher', UrlMatcher::class)
+    ->setArguments([$routes, new Reference('context')])
+;
+$app->register('request_stack', RequestStack::class);
+$app->register('controller_resolver', ControllerResolver::class);
+$app->register('argument_resolver', ArgumentResolver::class);
+
+/**
+ * Register event dispatcher
+ */
+$app->register('dispatcher', EventDispatcher::class);
+
+/**
+ * Define HTTP kernel dependencies
+ */
+$app->register('http_kernel', HttpKernel::class)
+    ->setArguments(
+         [
+              new Reference('dispatcher'),
+              new Reference('controller_resolver'),
+              new Reference('request_stack'),
+              new Reference('argument_resolver'),
+         ]
+    )
+;
+
+/**
+ * Register Http kernel as the main kernel of application
+ */
+$app->setAlias(KernelInterface::class, 'http_kernel');
+
+/**
+ * App is ready to use!
+ * Because our application acts as a container (indeed it is, we make it
+ * global :")
+ */
+global $app;
