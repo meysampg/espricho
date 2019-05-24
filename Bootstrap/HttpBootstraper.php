@@ -95,7 +95,7 @@ $app->setAlias(KernelInterface::class, 'http_kernel');
 
 /**
  * App is ready to use!
- * Because our application acts as a container (indeed it is, we make it
- * global :")
+ * Because our application acts as a container (indeed it is), we make it
+ * global :-" (TODO: any better solution?)
  */
 global $app;
