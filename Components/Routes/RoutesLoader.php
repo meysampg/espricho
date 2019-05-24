@@ -80,13 +80,13 @@ class RoutesLoader
      */
     protected function loadModulesRoutes()
     {
-        foreach ($this->configs->get('modules') as $name => $config) {
+        foreach ($this->configs->get('modules')->all() as $name => $config) {
             /**
              * On an HMVC manner, a module can have a submodule, so we can call
              * this loading process on a recursive fashion.
              */
             $ds = DIRECTORY_SEPARATOR;
-            $this->loadModuleRoutes($this->routes, $config->all(), $name, __DIR__ . "{$ds}..{$ds}..{$ds}Modules");
+            $this->loadModuleRoutes($this->routes, $config, $name, __DIR__ . "{$ds}..{$ds}..{$ds}Modules");
         }
     }
 
