@@ -3,6 +3,7 @@
 namespace Espricho\Components\Application;
 
 use Exception;
+use Symfony\Component\Debug\Debug;
 use Espricho\Components\Configs\ConfigCollection;
 use Espricho\Components\Contracts\KernelInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -28,12 +29,11 @@ class Application extends ContainerBuilder
      * @param ConfigCollection           $configs
      * @param ParameterBagInterface|null $parameterBag
      */
-    public function __construct(
-         ConfigCollection $configs,
-         ParameterBagInterface $parameterBag =
-         null
-    ) {
+    public function __construct(ConfigCollection $configs, ParameterBagInterface $parameterBag = null)
+    {
         $this->configs = $configs;
+
+        $this->setDebugBehaviour();
 
         parent::__construct($parameterBag);
     }
@@ -89,5 +89,21 @@ class Application extends ContainerBuilder
     public function getConfig(string $name, $default = null)
     {
         return $this->configs ? $this->configs->get($name, $default) : $default;
+    }
+
+    /**
+     * Set the debugging behaviour
+     */
+    protected function setDebugBehaviour()
+    {
+
+        /**
+         * Enable debug mode based on the configuration
+         */
+        if ($this->getConfig('app.debug', false)) {
+            Debug::enable();
+            ini_set('display_errors', 1);
+            error_reporting(-1);
+        }
     }
 }

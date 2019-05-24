@@ -5,7 +5,6 @@
  */
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Symfony\Component\Debug\Debug;
 use Espricho\Components\Http\HttpKernel;
 use Espricho\Components\Routes\RoutesLoader;
 use Symfony\Component\Routing\RequestContext;
