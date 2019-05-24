@@ -5,10 +5,13 @@ namespace Espricho\Components\Configs;
 use Countable;
 use ArrayIterator;
 use IteratorAggregate;
+use Espricho\Components\Helpers\Arr;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Config\Resource\ResourceInterface;
 
 use function count;
+use function explode;
+use function is_array;
 
 /**
  * Class ConfigCollection provides functions to working with configurations
@@ -57,21 +60,23 @@ class ConfigCollection implements IteratorAggregate, Countable
      * Return a Configuration
      *
      * @param string $name
-     * @param array  $defaults
+     * @param mixed  $defaults
      *
-     * @return array
+     * @return mixed
      */
-    public function get(string $name, array $defaults = []): array
+    public function get(string $name, $defaults = [])
     {
+        $configs = $this->configs;
+
         if ($this->has($name)) {
             if (!empty($defaults)) {
                 $options = new OptionsResolver();
                 $options->setDefaults($defaults);
 
-                return $options->resolve($this->configs[$name]->all());
+                $configs = $options->resolve($this->all());
             }
 
-            return $this->configs[$name]->all();
+            return $this->dotFinder($name, $configs);
         }
 
         return $defaults;
@@ -86,7 +91,7 @@ class ConfigCollection implements IteratorAggregate, Countable
      */
     public function has(string $name): bool
     {
-        return isset($this->configs[$name]);
+        return $this->dotFinder($name, $this->configs) !== null;
     }
 
     /**
@@ -148,5 +153,39 @@ class ConfigCollection implements IteratorAggregate, Countable
     public function count()
     {
         return count($this->configs);
+    }
+
+    /**
+     * Search a config array for a given dot-notation configuration key
+     *
+     * @param string $name
+     * @param array  $config
+     * @param string $dot
+     *
+     * @return mixed
+     */
+    protected function dotFinder(string $name, array $config, string $dot = '.')
+    {
+        $name = explode($dot, $name);
+        for ($i = 0; $i < count($name) && ($key = $name[$i]) && isset($config[$key]); $i++) {
+            // if it's on the collection, pursue to find it
+            if (is_array($config[$key])) {
+                $config = $config[$key];
+                continue;
+            }
+
+            // if it's a Configuration, get the rest from the Configuration
+            if ($config[$key] instanceof Configuration) {
+                return $config[$key]->get(
+                     Arr::ImplodeByPosition(
+                          $name,
+                          '.',
+                          $i + 1
+                     )
+                );
+            }
+        }
+
+        return $config;
     }
 }

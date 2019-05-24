@@ -65,11 +65,11 @@ class Configuration implements Serializable
      * Return a Configuration value of a given key
      *
      * @param string $key
-     * @param array  $default
+     * @param mixed  $default
      *
-     * @return array
+     * @return mixed
      */
-    public function get(string $key, $default = null): array
+    public function get(string $key, $default = null)
     {
         return $this->has($key) ? $this->data[$key] : $default;
     }
