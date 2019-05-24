@@ -72,4 +72,18 @@ class Application extends ContainerBuilder
     {
         return $this->configs;
     }
+
+    /**
+     * Get an application configuration
+     *
+     * @param string $name    The dot-notationed string of configuration
+     * @param mixed  $default The default value for case which the
+     *                        configuration not found
+     *
+     * @return mixed
+     */
+    public function getConfig(string $name, $default)
+    {
+        return $this->configs ? $this->configs->get($name, $default) : $default;
+    }
 }
