@@ -1,6 +1,6 @@
 {
     "name": "meysampg/espricho",
-    "description": "The evaluation project of DK technical interview",
+    "description": "A ready to use modular framework (like Yii2) with a powerful container (like Laravel) for php",
     "type": "project",
     "license": "MIT",
     "authors": [
