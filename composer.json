@@ -25,7 +25,8 @@
         "symfony/debug": "^4.2"
     },
     "require-dev": {
-        "symfony/maker-bundle": "^1.11"
+        "symfony/maker-bundle": "^1.11",
+        "symfony/var-dumper": "^4.2"
     },
     "autoload": {
         "files": [
