@@ -3,13 +3,13 @@ Espricho is a lightwieght framework for php7, based on
 [Symfony](https://symfony.com) components with a built-in 
 modular system support.
 
-### Prevision!
+## Prevision!
 Espricho is heavily inspired from [Laravel](http://laravel.com/) 
 and [Yii2](http://yiiframework.com/). Its modularity is similar to
 Yii2 but thanks to the Symfony DI container, it has
 a powerful container like Laravel!
 
-### Structure
+## Structure
 Espricho has a structure like this:
 ```
 ├── Bootstrap
@@ -24,7 +24,7 @@ Espricho has a structure like this:
 ```
 We talk about each one in continue.
 
-### Database Configurations
+## Database Configurations
 The database configuration should be set on `db.yaml` on `Configs`
 folder of project's root. A sample for its content is similar
 to this:
@@ -38,7 +38,7 @@ db:
   database: espricho
 ```
 
-### Modules
+## Modules
 For defining module, you must put your module under the 
 `Modules` folder and define your structure on it. A sample
 structure can be something like this:
