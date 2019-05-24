@@ -5,6 +5,7 @@
  */
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use Symfony\Component\Debug\Debug;
 use Espricho\Components\Http\HttpKernel;
 use Espricho\Components\Routes\RoutesLoader;
 use Symfony\Component\Routing\RequestContext;
@@ -33,8 +34,15 @@ $ds = DIRECTORY_SEPARATOR;
  */
 $configs = (new ConfigurationsLoader(
      __DIR__ . "{$ds}..{$ds}Configs",
-     ['db.yaml', 'modules.yaml']
+     ['app.yaml', 'db.yaml', 'modules.yaml']
 ))->load();
+
+/**
+ * Enable debug mode based on the configuration
+ */
+if ($configs->get('app.debug', false)) {
+    Debug::enable();
+}
 
 /**
  * fetch routes

@@ -21,7 +21,8 @@
         "symfony/http-kernel": "^4.2",
         "symfony/dependency-injection": "^4.2",
         "symfony/yaml": "^4.2",
-        "symfony/event-dispatcher": "^4.2"
+        "symfony/event-dispatcher": "^4.2",
+        "symfony/debug": "^4.2"
     },
     "require-dev": {
         "symfony/maker-bundle": "^1.11"
