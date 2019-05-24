@@ -86,7 +86,7 @@ class RoutesLoader
              * this loading process on a recursive fashion.
              */
             $ds = DIRECTORY_SEPARATOR;
-            $this->loadModuleRoutes($this->routes, $config, $name, __DIR__ . "{$ds}..{$ds}..{$ds}Modules");
+            $this->loadModuleRoutes($this->routes, $config->all(), $name, __DIR__ . "{$ds}..{$ds}..{$ds}Modules");
         }
     }
 
