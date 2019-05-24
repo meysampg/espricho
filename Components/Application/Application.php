@@ -82,7 +82,7 @@ class Application extends ContainerBuilder
      *
      * @return mixed
      */
-    public function getConfig(string $name, $default)
+    public function getConfig(string $name, $default = null)
     {
         return $this->configs ? $this->configs->get($name, $default) : $default;
     }
