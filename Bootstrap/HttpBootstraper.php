@@ -9,7 +9,6 @@ use Espricho\Components\Http\HttpKernel;
 use Espricho\Components\Routes\RoutesLoader;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RequestContext;
-use Espricho\Components\Singletons\Application;
 use Espricho\Components\Configs\ConfigCollection;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Espricho\Components\Contracts\KernelInterface;
@@ -41,7 +40,7 @@ $configs = (new ConfigurationsLoader(
 /**
  * Create the application!
  */
-$app = Application::i($configs);
+$app = app();
 
 /**
  * fetch routes

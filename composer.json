@@ -28,6 +28,9 @@
         "symfony/maker-bundle": "^1.11"
     },
     "autoload": {
+        "files": [
+            "Components/Singletons/helpers.php"
+        ],
         "psr-4": {
             "Espricho\\": "./"
         }
