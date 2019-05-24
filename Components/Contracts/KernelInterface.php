@@ -9,12 +9,4 @@ namespace Espricho\Components\Contracts;
  */
 interface KernelInterface
 {
-    /**
-     * Fire up the application!
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
-    public function fire(Request $request);
 }
