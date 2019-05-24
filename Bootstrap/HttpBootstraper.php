@@ -40,7 +40,7 @@ $configs = (new ConfigurationsLoader(
 /**
  * Create the application!
  */
-$app = app();
+$app = app($configs);
 
 /**
  * fetch routes
