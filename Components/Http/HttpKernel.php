@@ -14,10 +14,8 @@ use Espricho\Components\Contracts\HttpKernelInterfaceInterface as HttpKernelInte
  */
 class HttpKernel extends BaseHttpKernel implements HttpKernelInterface
 {
-    public function fire()
+    public function fire(Request $request)
     {
-        $request = Request::createFromGlobals();
-
         // TODO: add kernel level before middleware support
         $response = $this->handle($request)->send();
         // TODO: add kernel level after middleware support

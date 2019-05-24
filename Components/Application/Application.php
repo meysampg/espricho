@@ -47,7 +47,7 @@ class Application extends ContainerBuilder
     public function fire()
     {
         // TODO: add app level before middleware support
-        $response = $this->get(KernelInterface::class)->fire();
+        $response = $this->get(KernelInterface::class)->fire($this->getParameter('request'));
         // TODO: add app level after middleware support
 
         return $response;
