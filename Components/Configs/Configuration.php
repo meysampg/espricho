@@ -66,24 +66,26 @@ class Configuration implements Serializable
      *
      * @param string $key
      * @param mixed  $default
+     * @param string $del
      *
      * @return mixed
      */
-    public function get(string $key, $default = null)
+    public function get(string $key, $default = null, string $del = '.')
     {
-        return $this->has($key) ? $this->data[$key] : $default;
+        return $this->dotFinder($key, $this->data, $del) ?? $default;
     }
 
     /**
      * Check a config key is present or not
      *
      * @param string $key
+     * @param string $del
      *
      * @return bool
      */
-    public function has(string $key): bool
+    public function has(string $key, string $del = '.'): bool
     {
-        return isset($this->data[$key]);
+        return $this->dotFinder($key, $this->data, $del) !== null;
     }
 
     /**
@@ -107,5 +109,29 @@ class Configuration implements Serializable
     public function remove(string $key)
     {
         unset($this->data[$key]);
+    }
+
+    /**
+     * Search a configuration for a given dot-notation configuration key
+     *
+     * @param string $name
+     * @param array  $config
+     * @param string $dot
+     *
+     * @return mixed
+     */
+    protected function dotFinder(string $name, array $config, string $dot = '.')
+    {
+        $name = explode($dot, $name);
+
+        foreach ($name as $key) {
+            if (!isset($config[$key])) {
+                return null;
+            }
+
+            $config = $config[$key];
+        }
+
+        return $config;
     }
 }
