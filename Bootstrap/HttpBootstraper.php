@@ -9,7 +9,7 @@ use Espricho\Components\Http\HttpKernel;
 use Espricho\Components\Routes\RoutesLoader;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RequestContext;
-use Espricho\Components\Application\Application;
+use Espricho\Components\Singletons\Application;
 use Espricho\Components\Configs\ConfigCollection;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Espricho\Components\Contracts\KernelInterface;
@@ -39,11 +39,9 @@ $configs = (new ConfigurationsLoader(
 ))->load();
 
 /**
- * Enable debug mode based on the configuration
+ * Create the application!
  */
-if ($configs->get('app.debug', false)) {
-    Debug::enable();
-}
+$app = Application::i($configs);
 
 /**
  * fetch routes
@@ -106,9 +104,3 @@ $app->register('http_kernel', HttpKernel::class)
  */
 $app->setAlias(KernelInterface::class, 'http_kernel');
 
-/**
- * App is ready to use!
- * Because our application acts as a container (indeed it is), we make it
- * global :-" (TODO: any better solution?)
- */
-global $app;
