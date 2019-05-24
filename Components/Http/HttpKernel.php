@@ -18,6 +18,10 @@ class HttpKernel extends BaseHttpKernel implements HttpKernelInterface
     {
         $request = Request::createFromGlobals();
 
-        return $this->handle($request)->send();
+        // TODO: add kernel level before middleware support
+        $response = $this->handle($request)->send();
+        // TODO: add kernel level after middleware support
+
+        return $response;
     }
 }

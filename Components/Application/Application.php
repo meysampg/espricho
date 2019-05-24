@@ -46,7 +46,11 @@ class Application extends ContainerBuilder
      */
     public function fire()
     {
-        return $this->get(KernelInterface::class)->fire();
+        // TODO: add app level before middleware support
+        $response = $this->get(KernelInterface::class)->fire();
+        // TODO: add app level after middleware support
+
+        return $response;
     }
 
     /**
