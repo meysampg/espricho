@@ -13,7 +13,7 @@ swallow bird (in Kermani Dialect).
 ## Mafsho
 `mafsho` is a command line tool which provide a lot of functionality
 like generators to work more easier with Espricho. It's a Farsi word
-means bag (in Kermani dialect).
+means bag (in Kermani dialect). You can run it with `php mafsho` command.
 
 ## Structure
 Espricho has a structure like this:
