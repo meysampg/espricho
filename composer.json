@@ -22,10 +22,10 @@
         "symfony/dependency-injection": "^4.2",
         "symfony/yaml": "^4.2",
         "symfony/event-dispatcher": "^4.2",
-        "symfony/debug": "^4.2"
+        "symfony/debug": "^4.2",
+        "doctrine/collections": "^1.6"
     },
     "require-dev": {
-        "symfony/maker-bundle": "^1.11",
         "symfony/var-dumper": "^4.2"
     },
     "autoload": {
