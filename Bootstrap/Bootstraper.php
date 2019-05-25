@@ -23,3 +23,8 @@ $configs = (new ConfigurationsLoader(
      __DIR__ . "{$ds}..{$ds}Configs",
      ['app.yaml', 'db.yaml', 'modules.yaml']
 ))->load();
+
+/**
+ * Create the application!
+ */
+$app = app($configs);

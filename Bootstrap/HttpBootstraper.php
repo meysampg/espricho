@@ -19,11 +19,6 @@ use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
 use Symfony\Component\HttpKernel\Controller\ControllerResolver;
 
 /**
- * Create the application!
- */
-$app = app($configs);
-
-/**
  * fetch routes
  */
 $app->setParameter(

@@ -2,6 +2,7 @@
 
 use Espricho\Components\Console\Console;
 use Symfony\Component\Console\Helper\HelperSet;
+use Espricho\Components\Contracts\KernelInterface;
 use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
 use Doctrine\Migrations\Tools\Console\Command\GenerateCommand;
 use Doctrine\Migrations\Tools\Console\Command\DiffCommand;
@@ -15,25 +16,28 @@ use Doctrine\Migrations\Tools\Console\Command\DumpSchemaCommand;
  */
 require_once __DIR__ . "{$ds}Bootstraper.php";
 
-/**
- * Create console application
- */
-$app = new Console("Espricho", "0.1");
-$app->setConfigs($configs);
+$app->register('console_kernel', Console::class)
+    ->setArguments(["Espricho", "0.1"])
+;
 
 /**
  * Load entity manager and assign the helper set
  */
 $em        = em($configs);
 $helperSet = new HelperSet(["db" => new ConnectionHelper($em->getConnection())]);
-$app->setHelperSet($helperSet);
+$app->get('console_kernel')->setHelperSet($helperSet);
+
+/**
+ * Register console kernel as the application kernel
+ */
+$app->setAlias(KernelInterface::class, 'console_kernel');
 
 /**
  * Register migration commands
  */
-$app->add(new GenerateCommand());
-$app->add(new DiffCommand());
-$app->add(new MigrateCommand());
-$app->add(new RollupCommand());
-$app->add(new StatusCommand());
-$app->add(new DumpSchemaCommand());
+$app->get('console_kernel')->add(new GenerateCommand());
+$app->get('console_kernel')->add(new DiffCommand());
+$app->get('console_kernel')->add(new MigrateCommand());
+$app->get('console_kernel')->add(new RollupCommand());
+$app->get('console_kernel')->add(new StatusCommand());
+$app->get('console_kernel')->add(new DumpSchemaCommand());
