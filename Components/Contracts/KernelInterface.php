@@ -9,4 +9,8 @@ namespace Espricho\Components\Contracts;
  */
 interface KernelInterface
 {
+    /**
+     * Fire up the application!
+     */
+    public function fire();
 }
