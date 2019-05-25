@@ -3,7 +3,6 @@
 namespace Espricho\Components\Containers;
 
 use function func_get_args;
-use function is_null;
 
 class Singleton
 {
@@ -17,9 +16,9 @@ class Singleton
     /**
      * The class container
      *
-     * @var object
+     * @var array
      */
-    protected static $instance;
+    protected static $instance = [];
 
     /**
      * Get an instance of given object
@@ -28,11 +27,11 @@ class Singleton
      */
     public static function getInstance(): object
     {
-        if (is_null(static::$instance)) {
-            static::$instance = new static::$class(...func_get_args());
+        if (!isset(static::$instance[static::$class])) {
+            static::$instance[static::$class] = new static::$class(...func_get_args());
         }
 
-        return static::$instance;
+        return static::$instance[static::$class];
     }
 
     /**
