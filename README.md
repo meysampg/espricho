@@ -7,7 +7,13 @@ modular system support.
 Espricho is heavily inspired from [Laravel](http://laravel.com/) 
 and [Yii2](http://yiiframework.com/). Its modularity is similar to
 Yii2 but thanks to the Symfony DI container, it has
-a powerful container like Laravel!
+a powerful container like Laravel! Espricho is the Persian name of 
+swallow bird (in Kermani Dialect).
+
+## Mafsho
+`mafsho` is a command line tool which provide a lot of functionality
+like generators to work more easier with Espricho. It's a Farsi word
+means bag (in Kermani dialect).
 
 ## Structure
 Espricho has a structure like this:
