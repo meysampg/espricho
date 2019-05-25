@@ -23,7 +23,8 @@
         "symfony/yaml": "^4.2",
         "symfony/event-dispatcher": "^4.2",
         "symfony/debug": "^4.2",
-        "doctrine/collections": "^1.6"
+        "doctrine/collections": "^1.6",
+        "symfony/console": "^4.2"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2"
