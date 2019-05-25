@@ -3,44 +3,20 @@
 /**
  * fire composer autoloader!
  */
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . "{$ds}Bootstraper.php";
 
 use Espricho\Components\Http\HttpKernel;
 use Espricho\Components\Routes\RoutesLoader;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RequestContext;
-use Espricho\Components\Configs\ConfigCollection;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Espricho\Components\Contracts\KernelInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\DependencyInjection\Reference;
-use Espricho\Components\Configs\ConfigurationsLoader;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpKernel\EventListener\RouterListener;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
 use Symfony\Component\HttpKernel\Controller\ControllerResolver;
-
-/**
- * The directory separator
- *
- * @var string
- */
-$ds = DIRECTORY_SEPARATOR;
-
-/**
- * load application configurations
- *
- * @var $configs ConfigCollection
- */
-$configs = (new ConfigurationsLoader(
-     __DIR__ . "{$ds}..{$ds}Configs",
-     ['app.yaml', 'db.yaml', 'modules.yaml']
-))->load();
-
-/**
- * Create the application!
- */
-$app = app($configs);
 
 /**
  * fetch routes
