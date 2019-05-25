@@ -16,7 +16,7 @@ use Doctrine\Migrations\Tools\Console\Command\DumpSchemaCommand;
  */
 require_once __DIR__ . "{$ds}Bootstraper.php";
 
-$app->register('console_kernel', Console::class)
+$app->register(KernelInterface::class, Console::class)
     ->setArguments(["Espricho", "0.1"])
 ;
 

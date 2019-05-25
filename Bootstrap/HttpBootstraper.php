@@ -63,7 +63,7 @@ $app->get('dispatcher')->addSubscriber(new RouterListener($app->get('matcher'), 
 /**
  * Define HTTP kernel dependencies
  */
-$app->register('http_kernel', HttpKernel::class)
+$app->register(KernelInterface::class, HttpKernel::class)
     ->setArguments(
          [
               new Reference('dispatcher'),
