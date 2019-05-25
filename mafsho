@@ -1,0 +1,10 @@
+#!/usr/bin/env php
+<?php
+
+$ds = DIRECTORY_SEPARATOR;
+require __DIR__ . "{$ds}Bootstrap{$ds}ConsoleBootstraper.php";
+
+/**
+ * Mafsho is a console command which provides operations in a CMD!
+ */
+exit($app->fire());
