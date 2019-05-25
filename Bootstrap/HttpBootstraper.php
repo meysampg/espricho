@@ -79,3 +79,8 @@ $app->register('http_kernel', HttpKernel::class)
  */
 $app->setAlias(KernelInterface::class, 'http_kernel');
 
+/**
+ * Load entity manager singleton
+ */
+em($app->getConfigs());
+
