@@ -20,6 +20,13 @@ class Application extends ContainerBuilder
     use ConfigCommonMethodsTrait;
 
     /**
+     * Defines service providers
+     *
+     * @var array
+     */
+    protected $serviceProviders = [];
+
+    /**
      * Application constructor.
      *
      * @param ConfigCollection           $configs
@@ -44,9 +51,26 @@ class Application extends ContainerBuilder
     {
         // TODO: add app level before middleware support
         $response = $this->get(KernelInterface::class)->fire();
+
         // TODO: add app level after middleware support
 
         return $response;
+    }
+
+    /**
+     * Register a service provider on the application
+     *
+     * @param string $provider
+     */
+    public function registerServiceProvider(string $provider)
+    {
+        if (isset($this->serviceProviders[$provider])) {
+            return; // service is already loaded
+        }
+
+        (new $provider)->load($this);
+
+        $this->serviceProviders[$provider] = true;
     }
 
     /**
