@@ -14,10 +14,10 @@ use Espricho\Components\Contracts\HttpKernelInterfaceInterface as HttpKernelInte
  */
 class HttpKernel extends BaseHttpKernel implements HttpKernelInterface
 {
-    public function fire(Request $request)
+    public function fire()
     {
         // TODO: add kernel level before middleware support
-        $response = $this->handle($request)->send();
+        $response = $this->handle(app()->getParameter('request'))->send();
         // TODO: add kernel level after middleware support
 
         return $response;
