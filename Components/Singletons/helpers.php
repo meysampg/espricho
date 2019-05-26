@@ -35,3 +35,32 @@ if (!function_exists('em')) {
         return app()->get(EntityManager::class);
     }
 }
+
+if (!function_exists('hash_string')) {
+    /**
+     * Hash a given string with PASSWORD_BCRYPT algorithm
+     *
+     * @param string $s
+     *
+     * @return string
+     */
+    function hash_string(string $s): string
+    {
+        return password_hash($s, PASSWORD_BCRYPT);
+    }
+}
+
+if (!function_exists('check_hash')) {
+    /**
+     * Check a given string matches a hash or not
+     *
+     * @param string $s
+     * @param string $hash
+     *
+     * @return bool
+     */
+    function check_hash(string $s, string $hash): bool
+    {
+        return password_verify($s, $hash);
+    }
+}
