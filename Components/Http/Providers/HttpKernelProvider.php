@@ -21,12 +21,13 @@ use Espricho\Components\Application\Providers\EventDispatcherProvider;
 class HttpKernelProvider extends AbstractServiceProvider
 {
     protected $dependencies = [
-         RequestStack::class               => RequestStackProvider::class,
-         EventDispatcher::class            => EventDispatcherProvider::class,
-         RouteDispatcherProvider::PROVIDE  => RouteDispatcherProvider::class,
-         ArgumentResolver::class           => ArgumentResolverProvider::class,
-         ControllerResolver::class         => ControllerResolverProvider::class,
-         RequestParameterProvider::PROVIDE => RequestParameterProvider::class,
+         RequestStack::class                     => RequestStackProvider::class,
+         EventDispatcher::class                  => EventDispatcherProvider::class,
+         RouteDispatcherProvider::PROVIDE        => RouteDispatcherProvider::class,
+         ArgumentResolver::class                 => ArgumentResolverProvider::class,
+         ControllerResolver::class               => ControllerResolverProvider::class,
+         RequestParameterProvider::PROVIDE       => RequestParameterProvider::class,
+         ResponseJsonerListenerProvider::PROVIDE => ResponseJsonerListenerProvider::class,
     ];
 
     /**

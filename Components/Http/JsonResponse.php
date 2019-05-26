@@ -2,19 +2,13 @@
 
 namespace Espricho\Components\Http;
 
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse as BaseJsonResponse;
 
 /**
  * Class JsonResponse provides returning JSON response mechanism
  *
  * @package Espricho\Components\Http
  */
-class JsonResponse extends Response
+class JsonResponse extends BaseJsonResponse
 {
-    public function __construct(string $content = '', int $status = 200, array $headers = [])
-    {
-        // set response content-type = json
-
-        parent::__construct($content, $status, $headers);
-    }
 }
