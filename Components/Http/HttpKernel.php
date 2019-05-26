@@ -2,12 +2,15 @@
 
 namespace Espricho\Components\Http;
 
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Espricho\Components\Http\Events\AfterHttpKernelFireEvent;
+use Espricho\Components\Http\Events\BeforeHttpKernelFireEvent;
 use Symfony\Component\HttpKernel\HttpKernel as BaseHttpKernel;
 use Espricho\Components\Http\Providers\RequestParameterProvider;
-use Espricho\Components\Contracts\HttpKernelInterfaceInterface as HttpKernelInterface;
+use Espricho\Components\Contracts\HttpKernelInterface as HttpKernelInterface;
 
 /**
- * Class HttpKernelInterfaceInterface provides the Http kernel for the
+ * Class HttpKernelInterface provides the Http kernel for the
  * application
  *
  * @package Espricho\Components\Http
