@@ -5,6 +5,7 @@ namespace Espricho\Components\Console\Providers;
 use Symfony\Component\Console\Helper\HelperSet;
 use Espricho\Components\Application\Application;
 use Espricho\Components\Contracts\KernelInterface;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
 use Espricho\Components\Providers\AbstractServiceProvider;
 use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
@@ -25,6 +26,7 @@ class HelperSetProvider extends AbstractServiceProvider
          ConnectionHelper::class    => ConnectionHelperProvider::class,
          ConfigurationHelper::class => ConfigurationHelperProvider::class,
          EntityManagerHelper::class => EntityManagerHelperProvider::class,
+         QuestionHelper::class      => QuestionHelperProvider::class,
     ];
 
     /**
@@ -38,6 +40,7 @@ class HelperSetProvider extends AbstractServiceProvider
                       "db"            => $app->get(ConnectionHelper::class),
                       "configuration" => $app->get(ConfigurationHelper::class),
                       "em"            => $app->get(EntityManagerHelper::class),
+                      "question"      => $app->get(QuestionHelper::class),
                  ]
             )
         ;
