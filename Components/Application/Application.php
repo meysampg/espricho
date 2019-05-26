@@ -10,6 +10,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Espricho\Components\Configs\Traits\ConfigCommonMethodsTrait;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
+use function sprintf;
+
 /**
  * Class Application provides the core application class
  *
@@ -72,6 +74,18 @@ class Application extends ContainerBuilder
         (new $provider)->load($this);
 
         $this->serviceProviders[$provider] = true;
+    }
+
+    /**
+     * Convert a given parameter holder to container aware key
+     *
+     * @param string $s
+     *
+     * @return string
+     */
+    public function getParameterHolder(string $s): string
+    {
+        return sprintf("%%%s%%", $s);
     }
 
     /**
