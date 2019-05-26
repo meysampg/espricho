@@ -32,7 +32,7 @@ class Model
 
     public function getCreatedAt(): Carbon
     {
-        return Carbon::createFromTimeString($this->created_at);
+        return Carbon::instance($this->created_at);
     }
 
     public function setCreatedAt(string $dt)
@@ -42,7 +42,7 @@ class Model
 
     public function getUpdatedAt(): Carbon
     {
-        return Carbon::createFromTimeString($this->updated_at);
+        return Carbon::instance($this->updated_at);
     }
 
     public function setUpdatedAt(string $dt)
@@ -52,7 +52,7 @@ class Model
 
     public function getDeletedAt(): Carbon
     {
-        return Carbon::createFromTimeString($this->deleted_at);
+        return Carbon::instance($this->deleted_at);
     }
 
     public function setDeletedAt(string $dt)
