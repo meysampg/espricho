@@ -77,10 +77,3 @@ $app->register(KernelInterface::class, HttpKernel::class)
 /**
  * Register Http kernel as the main kernel of application
  */
-$app->setAlias(KernelInterface::class, 'http_kernel');
-
-/**
- * Load entity manager singleton
- */
-em($app->getConfigs());
-

@@ -13,6 +13,7 @@ require_once __DIR__ . "{$ds}..{$ds}vendor{$ds}autoload.php";
 
 use Espricho\Components\Configs\ConfigCollection;
 use Espricho\Components\Configs\ConfigurationsLoader;
+use Espricho\Components\Databases\Providers\EntityManagerProvider;
 
 /**
  * load application configurations
@@ -28,3 +29,5 @@ $configs = (new ConfigurationsLoader(
  * Create the application!
  */
 $app = app($configs);
+
+$app->registerServiceProvider(EntityManagerProvider::class);

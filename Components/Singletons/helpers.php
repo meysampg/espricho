@@ -1,8 +1,8 @@
 <?php
 
 use Espricho\Components\Singletons\Application;
+use Espricho\Components\Databases\EntityManager;
 use Espricho\Components\Configs\ConfigCollection;
-use Espricho\Components\Singletons\EntityManager;
 
 /**
  * Put all singletons on this file as a helper to access to them with a global
@@ -27,13 +27,11 @@ if (!function_exists('em')) {
     /**
      * Return an instance of entity manager
      *
-     * @param ConfigCollection|null $config
-     *
      * @return \Espricho\Components\Databases\EntityManager
-     * @throws \Doctrine\ORM\ORMException
+     * @throws Exception
      */
-    function em(ConfigCollection $config = null)
+    function em()
     {
-        return EntityManager::getInstance($config);
+        return app()->get(EntityManager::class);
     }
 }

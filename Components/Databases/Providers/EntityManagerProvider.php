@@ -1,42 +1,36 @@
 <?php
 
-namespace Espricho\Components\Singletons;
+namespace Espricho\Components\Databases\Providers;
 
 use Doctrine\ORM\Tools\Setup;
-use Espricho\Components\Containers\Singleton;
+use Espricho\Components\Databases\EntityManager;
+use Espricho\Components\Application\Application;
 use Espricho\Components\Configs\ConfigCollection;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Espricho\Components\Databases\EntityManager as BaseEntityManager;
+use Espricho\Components\Providers\AbstractServiceProvider;
 
 use function sprintf;
-use function func_get_args;
 
-class EntityManager extends Singleton
+/**
+ * Class EntityManagerProvider provides EntityManager provider
+ *
+ * @package Espricho\Components\Databases\Providers
+ */
+class EntityManagerProvider extends AbstractServiceProvider
 {
     /**
      * @inheritdoc
      */
-    protected static $class = BaseEntityManager::class;
-
-    /**
-     * Get an instance of EntityManager instance
-     *
-     * @return object
-     * @throws \Doctrine\ORM\ORMException
-     */
-    public static function getInstance(): object
+    public function register(Application $app)
     {
-        if (isset(static::$instance[static::$class])) {
-            return static::$instance[static::$class];
-        }
+        $debug    = $app->getConfig('app.debug');
+        $dbParams = static::getDBConfigurations($app->getConfigs());
+        $configs  = Setup::createAnnotationMetadataConfiguration($app->getConfig('db.orm.entity_paths'), $debug);
 
-        $configs = current(func_get_args());
-
-        $debug    = $configs->get('app.debug');
-        $dbParams = static::getDBConfigurations($configs);
-        $configs  = Setup::createAnnotationMetadataConfiguration($configs->get('db.orm.entity_paths'), $debug);
-
-        return static::$instance[static::$class] = BaseEntityManager::create($dbParams, $configs);
+        $app->register(EntityManager::class)
+            ->setFactory([EntityManager::class, 'create'])
+            ->setArguments([$dbParams, $configs])
+        ;
     }
 
     /**
