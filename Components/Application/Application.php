@@ -36,6 +36,7 @@ class Application extends ContainerBuilder
     {
         $this->configs = $configs;
 
+        date_default_timezone_set($configs->get('app.timezone', 'UTC'));
         $this->setDebugBehaviour();
 
         parent::__construct($parameterBag);
