@@ -1,2 +1,5 @@
 app:
+  name: Espricho
+  version: 0.1
   debug: true
+  timezone: Asia/Tehran
