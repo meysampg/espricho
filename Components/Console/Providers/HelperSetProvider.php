@@ -7,8 +7,10 @@ use Espricho\Components\Application\Application;
 use Espricho\Components\Contracts\KernelInterface;
 use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
 use Espricho\Components\Providers\AbstractServiceProvider;
+use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
 use Doctrine\Migrations\Tools\Console\Helper\ConfigurationHelper;
 use Espricho\Components\Databases\Providers\ConnectionHelperProvider;
+use Espricho\Components\Databases\Providers\EntityManagerHelperProvider;
 use Espricho\Components\Databases\Providers\ConfigurationHelperProvider;
 
 /**
@@ -22,6 +24,7 @@ class HelperSetProvider extends AbstractServiceProvider
          KernelInterface::class     => ConsoleProvider::class,
          ConnectionHelper::class    => ConnectionHelperProvider::class,
          ConfigurationHelper::class => ConfigurationHelperProvider::class,
+         EntityManagerHelper::class => EntityManagerHelperProvider::class,
     ];
 
     /**
@@ -34,6 +37,7 @@ class HelperSetProvider extends AbstractServiceProvider
                  [
                       "db"            => $app->get(ConnectionHelper::class),
                       "configuration" => $app->get(ConfigurationHelper::class),
+                      "em"            => $app->get(EntityManagerHelper::class),
                  ]
             )
         ;
