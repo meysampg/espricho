@@ -19,9 +19,17 @@ class HttpKernel extends BaseHttpKernel implements HttpKernelInterface
 {
     public function fire()
     {
-        // TODO: add kernel level before middleware support
-        $response = $this->handle(app()->getParameter(RequestParameterProvider::PROVIDE))->send();
-        // TODO: add kernel level after middleware support
+        $request = app()->getParameter(RequestParameterProvider::PROVIDE);
+
+        app()->get(EventDispatcher::class)
+             ->dipatch(HttpKernelInterface::EVENT_HTTP_KERNEL_BEFORE_FIRE, new BeforeHttpKernelFireEvent($request))
+        ;
+
+        $response = $this->handle($request)->send();
+
+        app()->get(EventDispatcher::class)
+             ->dipatch(HttpKernelInterface::EVENT_HTTP_KERNEL_AFTER_FIRE, new AfterHttpKernelFireEvent($request, $response))
+        ;
 
         return $response;
     }
