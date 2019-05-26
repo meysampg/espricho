@@ -31,7 +31,7 @@ class MigrationConfigurationProvider extends AbstractServiceProvider
 
         $mc = $app->get(Configuration::class);
         $mc->setName($app->getConfig('migration.name', 'Espricho Migration'));
-        $mc->setMigrationsNamespace($app->getConfig('migration.namespace', 'Espricho\Migration'));
+        $mc->setMigrationsNamespace($app->getConfig('migration.namespace', 'Espricho\Migrations'));
         $mc->setMigrationsTableName($app->getConfig('migration.table_name', 'migrations'));
         $mc->setMigrationsColumnName($app->getConfig('migration.column_name', 'version'));
         $mc->setMigrationsColumnLength($app->getConfig('migration.column_length', 255));
