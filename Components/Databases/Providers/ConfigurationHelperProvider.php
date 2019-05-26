@@ -2,8 +2,9 @@
 
 namespace Espricho\Components\Databases\Providers;
 
-use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
 use Espricho\Components\Application\Application;
+use Doctrine\Migrations\Configuration\Configuration;
+use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
 use Espricho\Components\Providers\AbstractServiceProvider;
 use Doctrine\Migrations\Tools\Console\Helper\ConfigurationHelper;
 
@@ -15,13 +16,19 @@ use Doctrine\Migrations\Tools\Console\Helper\ConfigurationHelper;
 class ConfigurationHelperProvider extends AbstractServiceProvider
 {
     protected $dependencies = [
+         Configuration::class    => MigrationConfigurationProvider::class,
          ConnectionHelper::class => ConnectionHelperProvider::class,
     ];
 
     public function register(Application $app)
     {
         $app->register(ConfigurationHelper::class, ConfigurationHelper::class)
-            ->addArgument($app->get(ConnectionHelper::class)->getConnection())
+            ->setArguments(
+                 [
+                      $app->get(ConnectionHelper::class)->getConnection(),
+                      $app->get(Configuration::class),
+                 ]
+            )
         ;
     }
 }
