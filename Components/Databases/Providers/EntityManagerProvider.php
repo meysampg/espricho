@@ -23,9 +23,8 @@ class EntityManagerProvider extends AbstractServiceProvider
      */
     public function register(Application $app)
     {
-        $debug    = $app->getConfig('app.debug');
-        $dbParams = static::getDBConfigurations($app->getConfigs());
-        $configs  = Setup::createAnnotationMetadataConfiguration($app->getConfig('db.orm.entity_paths'), $debug);
+        $dbParams = $this->getDBConfigurations($app->getConfigs());
+        $configs  = $this->getConfigs($app);
 
         $app->register(EntityManager::class)
             ->setFactory([EntityManager::class, 'create'])
@@ -40,7 +39,7 @@ class EntityManagerProvider extends AbstractServiceProvider
      *
      * @return array
      */
-    private static function getDBConfigurations(ConfigCollection $configs): array
+    private function getDBConfigurations(ConfigCollection $configs): array
     {
         $db = [
              'driver'   => sprintf("pdo_%s", $configs->get('db.driver')),
@@ -51,7 +50,7 @@ class EntityManagerProvider extends AbstractServiceProvider
              'port'     => $configs->get('db.port'),
         ];
 
-        return static::normalizeDBParams($db);
+        return $this->normalizeDBParams($db);
     }
 
     /**
@@ -61,7 +60,7 @@ class EntityManagerProvider extends AbstractServiceProvider
      *
      * @return array
      */
-    private static function normalizeDBParams(array $db): array
+    private function normalizeDBParams(array $db): array
     {
         $default = [
              'driver'   => '',
@@ -76,5 +75,23 @@ class EntityManagerProvider extends AbstractServiceProvider
         $resolver->setDefaults($default);
 
         return $resolver->resolve($db);
+    }
+
+    /**
+     * Return config metadata based on annotation
+     *
+     * @param Application $app
+     *
+     * @return \Doctrine\ORM\Configuration
+     */
+    private function getConfigs(Application $app)
+    {
+        return Setup::createAnnotationMetadataConfiguration(
+             $app->getConfig('db.orm.entity_paths'),
+             $app->getConfig('app.debug'),
+             null,
+             null,
+             false
+        );
     }
 }
