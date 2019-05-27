@@ -19,6 +19,13 @@ abstract class AbstractServiceProvider
     protected $dependencies = [];
 
     /**
+     * List of services which the provider can extend its functionality
+     *
+     * @var array
+     */
+    protected $suggestions = [];
+
+    /**
      * Load a service on a given app
      *
      * @param Application $app
@@ -27,6 +34,7 @@ abstract class AbstractServiceProvider
     {
         $this->loadDependencies($app);
         $this->register($app);
+        $this->loadSuggestions($app);
     }
 
     /**
@@ -59,6 +67,22 @@ abstract class AbstractServiceProvider
     protected function loadDependencies(Application $app)
     {
         foreach ($this->dependencies as $service => $provider) {
+            if ($this->isLoaded($app, $service)) {
+                continue;
+            }
+
+            (new $provider)->load($app);
+        }
+    }
+
+    /**
+     * Load all suggestions of the service
+     *
+     * @param Application $app
+     */
+    protected function loadSuggestions(Application $app)
+    {
+        foreach ($this->suggestions as $service => $provider) {
             if ($this->isLoaded($app, $service)) {
                 continue;
             }
