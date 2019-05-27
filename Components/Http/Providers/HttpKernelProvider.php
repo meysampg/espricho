@@ -2,6 +2,7 @@
 
 namespace Espricho\Components\Http\Providers;
 
+use Espricho\Components\Auth\Auth;
 use Espricho\Components\Http\HttpKernel;
 use Espricho\Components\Application\Application;
 use Espricho\Components\Contracts\KernelInterface;
@@ -9,6 +10,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Espricho\Components\Providers\AbstractServiceProvider;
+use Espricho\Components\Auth\Providers\AuthServiceProvider;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
 use Symfony\Component\HttpKernel\Controller\ControllerResolver;
 use Espricho\Components\Application\Providers\EventDispatcherProvider;
@@ -28,6 +30,7 @@ class HttpKernelProvider extends AbstractServiceProvider
          ControllerResolver::class               => ControllerResolverProvider::class,
          RequestParameterProvider::PROVIDE       => RequestParameterProvider::class,
          ResponseJsonerListenerProvider::PROVIDE => ResponseJsonerListenerProvider::class,
+         Auth::class                             => AuthServiceProvider::class,
     ];
 
     /**
