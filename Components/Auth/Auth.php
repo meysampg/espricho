@@ -3,16 +3,16 @@
 namespace Espricho\Components\Auth;
 
 use Exception;
+use Lcobucci\JWT\Builder;
 use Doctrine\ORM\EntityRepository;
 use Espricho\Components\Contracts\Authenticatable;
 use Espricho\Components\Auth\Events\UserLoggedInEvent;
-use function hash_string;
-use Lcobucci\JWT\Builder;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Espricho\Components\Auth\Exceptions\UserModelNotFound;
 
 use function em;
 use function is_null;
+use function check_hash;
 use function class_exists;
 use function method_exists;
 
@@ -58,15 +58,12 @@ class Auth
             return null;
         }
 
-        $user = $repository->findOneBy(
-             [
-                  'username' => $username,
-                  'password' => hash_string($password),
-             ]
-        );
-        if (is_null($user)) {
+        $user = $repository->findOneBy(['username' => $username,]);
+        if (is_null($user) || !check_hash($password, $user->getPassword())) {
             return null;
         }
+
+        app()->setUser($user);
 
         try {
             app()->get(EventDispatcher::class)
