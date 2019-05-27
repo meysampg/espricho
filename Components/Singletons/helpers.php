@@ -23,6 +23,20 @@ if (!function_exists('app')) {
     }
 }
 
+if (!function_exists('service')) {
+    /**
+     * Return a requested service from the container
+     *
+     * @param string $key
+     *
+     * @return object
+     */
+    function service(string $key)
+    {
+        return app()->get($key);
+    }
+}
+
 if (!function_exists('em')) {
     /**
      * Return an instance of entity manager
