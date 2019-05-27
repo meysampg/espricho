@@ -22,7 +22,7 @@ use Espricho\Components\Databases\Providers\EntityManagerProvider;
  */
 $configs = (new ConfigurationsLoader(
      __DIR__ . "{$ds}..{$ds}Configs",
-     ['app.yaml', 'db.yaml', 'modules.yaml']
+     ['app.yaml', 'db.yaml', 'modules.yaml', 'auth.yaml']
 ))->load();
 
 /**
