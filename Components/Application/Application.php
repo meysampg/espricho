@@ -6,6 +6,7 @@ use Exception;
 use Symfony\Component\Debug\Debug;
 use Espricho\Components\Configs\ConfigCollection;
 use Espricho\Components\Contracts\KernelInterface;
+use Espricho\Components\Contracts\Authenticatable;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Espricho\Components\Configs\Traits\ConfigCommonMethodsTrait;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -27,6 +28,13 @@ class Application extends ContainerBuilder
      * @var array
      */
     protected $serviceProviders = [];
+
+    /**
+     * Store the authenticated user model
+     *
+     * @var Authenticatable
+     */
+    protected $authenticated_user;
 
     /**
      * Application constructor.
@@ -86,6 +94,30 @@ class Application extends ContainerBuilder
     public function getParameterHolder(string $s): string
     {
         return sprintf("%%%s%%", $s);
+    }
+
+    /**
+     * Authenticated user setter
+     *
+     * @param Authenticatable $user
+     *
+     * @return Application
+     */
+    public function setUser(Authenticatable $user): Application
+    {
+        $this->authenticated_user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Authenticated user getter
+     *
+     * @return Authenticatable
+     */
+    public function getUser(): Authenticatable
+    {
+        return $this->authenticated_user;
     }
 
     /**
