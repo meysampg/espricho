@@ -18,6 +18,10 @@ use function sprintf;
  */
 class EntityManagerProvider extends AbstractServiceProvider
 {
+    protected $suggestions = [
+         ModelUpdatedSubscriberProvider::PROVIDE => ModelUpdatedSubscriberProvider::class,
+    ];
+
     /**
      * @inheritdoc
      */
