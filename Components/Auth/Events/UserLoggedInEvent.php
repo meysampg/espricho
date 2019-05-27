@@ -2,6 +2,7 @@
 
 namespace Espricho\Components\Auth\Events;
 
+use Symfony\Component\EventDispatcher\Event;
 use Espricho\Components\Contracts\Authenticatable;
 
 /**
@@ -9,7 +10,7 @@ use Espricho\Components\Contracts\Authenticatable;
  *
  * @package Espricho\Components\Auth\Events
  */
-class UserLoggedInEvent
+class UserLoggedInEvent extends Event
 {
     protected $user;
 
