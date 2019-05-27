@@ -36,7 +36,7 @@ class Model
         return Carbon::instance($this->createdAt);
     }
 
-    public function setCreatedAt(string $dt)
+    public function setCreatedAt(DateTimeInterface $dt)
     {
         $this->createdAt = $dt;
     }
@@ -46,9 +46,9 @@ class Model
         return Carbon::instance($this->updatedAt);
     }
 
-    public function setUpdatedAt(string $dt)
+    public function setUpdatedAt(DateTimeInterface $dt)
     {
-        $this->deletedAt = $dt;
+        $this->updatedAt = $dt;
     }
 
     public function getDeletedAt(): Carbon
@@ -56,7 +56,7 @@ class Model
         return Carbon::instance($this->deletedAt);
     }
 
-    public function setDeletedAt(string $dt)
+    public function setDeletedAt(DateTimeInterface $dt)
     {
         $this->deletedAt = $dt;
     }
