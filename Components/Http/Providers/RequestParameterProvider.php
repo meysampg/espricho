@@ -15,6 +15,10 @@ class RequestParameterProvider extends AbstractServiceProvider
 {
     public const PROVIDE = 'request_parameter';
 
+    protected $dependencies = [
+         RequestJsonerListenerProvider::PROVIDE => RequestJsonerListenerProvider::class,
+    ];
+
     /**
      * @inheritdoc
      */

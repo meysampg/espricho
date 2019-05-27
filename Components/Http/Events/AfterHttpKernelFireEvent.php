@@ -2,8 +2,11 @@
 
 namespace Espricho\Components\Http\Events;
 
+use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Espricho\Components\Contracts\RequestEvent;
+use Espricho\Components\Contracts\RequestResponseEvent;
 
 /**
  * Class AfterHttpKernelFireEvent provides functionality to work woth request
@@ -11,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @package Espricho\Components\Http\Events
  */
-class AfterHttpKernelFireEvent
+class AfterHttpKernelFireEvent extends Event implements RequestResponseEvent
 {
     protected $response;
     protected $request;
@@ -27,7 +30,7 @@ class AfterHttpKernelFireEvent
         return $this->request;
     }
 
-    public function setRequest(Request $request): AfterHttpKernelFireEvent
+    public function setRequest(Request $request): RequestEvent
     {
         $this->request = $request;
 
@@ -39,7 +42,7 @@ class AfterHttpKernelFireEvent
         return $this->response;
     }
 
-    public function setResponse(Response $response): AfterHttpKernelFireEvent
+    public function setResponse(Response $response): RequestResponseEvent
     {
         $this->response = $response;
 

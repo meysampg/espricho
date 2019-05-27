@@ -2,12 +2,13 @@
 
 namespace Espricho\Components\Http;
 
+use Espricho\Components\Contracts\HttpKernelEvent;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Espricho\Components\Contracts\HttpKernelInterface;
 use Espricho\Components\Http\Events\AfterHttpKernelFireEvent;
 use Espricho\Components\Http\Events\BeforeHttpKernelFireEvent;
 use Symfony\Component\HttpKernel\HttpKernel as BaseHttpKernel;
 use Espricho\Components\Http\Providers\RequestParameterProvider;
-use Espricho\Components\Contracts\HttpKernelInterface as HttpKernelInterface;
 
 /**
  * Class HttpKernelInterface provides the Http kernel for the
@@ -22,13 +23,13 @@ class HttpKernel extends BaseHttpKernel implements HttpKernelInterface
         $request = app()->getParameter(RequestParameterProvider::PROVIDE);
 
         app()->get(EventDispatcher::class)
-             ->dipatch(HttpKernelInterface::EVENT_HTTP_KERNEL_BEFORE_FIRE, new BeforeHttpKernelFireEvent($request))
+             ->dispatch(HttpKernelEvent::BEFORE_FIRE, new BeforeHttpKernelFireEvent($request))
         ;
 
         $response = $this->handle($request)->send();
 
         app()->get(EventDispatcher::class)
-             ->dipatch(HttpKernelInterface::EVENT_HTTP_KERNEL_AFTER_FIRE, new AfterHttpKernelFireEvent($request, $response))
+             ->dispatch(HttpKernelEvent::AFTER_FIRE, new AfterHttpKernelFireEvent($request, $response))
         ;
 
         return $response;

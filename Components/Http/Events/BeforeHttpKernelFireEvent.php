@@ -2,7 +2,9 @@
 
 namespace Espricho\Components\Http\Events;
 
+use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
+use Espricho\Components\Contracts\RequestEvent;
 
 /**
  * Class BeforeHttpKernelFireEvent provides functionality to work with request
@@ -10,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @package Espricho\Components\Http\Events
  */
-class BeforeHttpKernelFireEvent
+class BeforeHttpKernelFireEvent extends Event implements RequestEvent
 {
     protected $request;
 
@@ -24,7 +26,7 @@ class BeforeHttpKernelFireEvent
         return $this->request;
     }
 
-    public function setRequest(Request $request): BeforeHttpKernelFireEvent
+    public function setRequest(Request $request): RequestEvent
     {
         $this->request = $request;
 
