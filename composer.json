@@ -25,7 +25,8 @@
         "symfony/debug": "^4.2",
         "doctrine/collections": "^1.6",
         "symfony/console": "^4.2",
-        "nesbot/carbon": "^2.18"
+        "nesbot/carbon": "^2.18",
+        "lcobucci/jwt": "^3.3"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2"
