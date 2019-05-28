@@ -108,6 +108,40 @@ class Auth
         return null;
     }
 
+    /**
+     * Get user object of a given token
+     *
+     * @param string $token
+     *
+     * @return Authenticatable|null
+     */
+    public function getUser(string $token): ?Authenticatable
+    {
+        if (!$this->validate($token)) {
+            return null;
+        }
+
+        $repository = $this->getUserRepository();
+        if (is_null($repository)) {
+            return null;
+        }
+
+        $token = (new Parser())->parse($token);
+        $user  = $repository->findOneBy(['id' => $token->getClaim('uid')]);
+        if (is_null($user)) {
+            return null;
+        }
+
+        return $user;
+    }
+
+    /**
+     * Validate a given token
+     *
+     * @param string $token
+     *
+     * @return bool
+     */
     public function validate(string $token): bool
     {
         $token      = (new Parser())->parse($token);
@@ -160,6 +194,7 @@ class Auth
         $signer = new Sha512();
         $token  = (new Builder())->issuedAt(time())
                                  ->expiresAt($time + app()->getConfig('auth.expire_time', 3600))
+                                 ->withClaim('uid', $user->getId())
         ;
 
         foreach ($this->getCustomClaims($user) as $claim => $value) {
