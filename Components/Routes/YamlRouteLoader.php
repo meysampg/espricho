@@ -3,8 +3,6 @@
 namespace Espricho\Components\Routes;
 
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\Routing\RouteCollection;
-use Symfony\Component\Routing\Loader\YamlFileLoader;
 
 /**
  * Class YamlRouteLoader it loads `routes.yaml` on given directory

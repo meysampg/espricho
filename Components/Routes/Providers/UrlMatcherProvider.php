@@ -6,6 +6,7 @@ use Symfony\Component\Routing\RequestContext;
 use Espricho\Components\Application\Application;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\DependencyInjection\Reference;
+use Espricho\Components\Routes\UrlMatcher as MyUrlMatcher;
 use Espricho\Components\Providers\AbstractServiceProvider;
 
 /**
@@ -20,12 +21,16 @@ class UrlMatcherProvider extends AbstractServiceProvider
          RequestContext::class   => RequestContextProvider::class,
     ];
 
+    protected $suggestions = [
+         UrlMatchedMiddlewareSubscribeProvider::PROVIDE => UrlMatchedMiddlewareSubscribeProvider::class,
+    ];
+
     /**
      * @inheritdoc
      */
     public function register(Application $app)
     {
-        $app->register(UrlMatcher::class, UrlMatcher::class)
+        $app->register(UrlMatcher::class, MyUrlMatcher::class)
             ->setArguments([$app->getParameterHolder(RoutesProvider::PROVIDE), new Reference(RequestContext::class)])
         ;
     }

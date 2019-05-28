@@ -2,8 +2,7 @@
 
 namespace Espricho\Components\Routes;
 
-use Espricho\Components\Application\Module;
-use Symfony\Component\Routing\RouteCollection;
+use Espricho\Components\Http\Module;
 use Espricho\Components\Configs\ConfigCollection;
 
 use function ucfirst;
