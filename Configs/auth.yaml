@@ -1,3 +1,4 @@
 auth:
   model: Espricho\Models\User
   expire_time: 3600 # in seconds
+  secret: Espricho # put a randomized string to sign your tokens
