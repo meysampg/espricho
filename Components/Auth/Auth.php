@@ -3,8 +3,12 @@
 namespace Espricho\Components\Auth;
 
 use Exception;
+use Lcobucci\JWT\Parser;
 use Lcobucci\JWT\Builder;
+use Lcobucci\JWT\Signer\Key;
+use Lcobucci\JWT\ValidationData;
 use Doctrine\ORM\EntityRepository;
+use Lcobucci\JWT\Signer\Hmac\Sha512;
 use Espricho\Components\Contracts\Authenticatable;
 use Espricho\Components\Auth\Events\UserLoggedInEvent;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -102,6 +106,15 @@ class Auth
         }
 
         return null;
+    }
+
+    public function validate(string $token): bool
+    {
+        $token      = (new Parser())->parse($token);
+        $signer     = new Sha512();
+        $validation = new ValidationData();
+
+        return $token->verify($signer, app()->getConfig('auth.secret', 'Espricho')) && $token->validate($validation);
     }
 
     /**
