@@ -156,15 +156,16 @@ class Auth
      */
     protected function generateToken(Authenticatable $user): string
     {
-        $time  = time();
-        $token = (new Builder())->issuedAt(time())
-                                ->expiresAt($time + app()->getConfig('auth.expire_time', 3600))
+        $time   = time();
+        $signer = new Sha512();
+        $token  = (new Builder())->issuedAt(time())
+                                 ->expiresAt($time + app()->getConfig('auth.expire_time', 3600))
         ;
 
         foreach ($this->getCustomClaims($user) as $claim => $value) {
             $token->withClaim($claim, $value);
         }
 
-        return (string)$token->getToken();
+        return (string)$token->getToken($signer, new Key(app()->getConfig('auth.secret', 'Espricho')));
     }
 }
