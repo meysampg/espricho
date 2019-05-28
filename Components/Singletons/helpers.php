@@ -1,5 +1,6 @@
 <?php
 
+use Espricho\Components\Contracts\Middleware;
 use Espricho\Components\Singletons\Application;
 use Espricho\Components\Databases\EntityManager;
 use Espricho\Components\Configs\ConfigCollection;
@@ -34,6 +35,20 @@ if (!function_exists('service')) {
     function service(string $key)
     {
         return app()->get($key);
+    }
+}
+
+if (!function_exists('middleware')) {
+    /**
+     * Get the class or alias key of a middleware and return its class
+     *
+     * @param string $key
+     *
+     * @return Middleware|null
+     */
+    function middleware(string $key): ?Middleware
+    {
+        return app()->getMiddleware($key);
     }
 }
 
