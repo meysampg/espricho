@@ -21,4 +21,6 @@ interface HttpKernelEvent
      * receive a AfterHttpKernelFireEvent event.
      */
     const AFTER_FIRE = 'event_http_kernel_before_fire';
+
+    const ROUTE_MATCHED = 'event_http_kernel_route_matched';
 }
