@@ -2,6 +2,8 @@
 
 namespace Espricho\Components\Http;
 
+use Espricho\Components\Application\Onion;
+use Symfony\Component\HttpFoundation\Request;
 use Espricho\Components\Contracts\HttpKernelEvent;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Espricho\Components\Contracts\HttpKernelInterface;
@@ -26,7 +28,13 @@ class HttpKernel extends BaseHttpKernel implements HttpKernelInterface
              ->dispatch(HttpKernelEvent::BEFORE_FIRE, new BeforeHttpKernelFireEvent($request))
         ;
 
-        $response = $this->handle($request)->send();
+        $response = Onion::run(
+             app()->getMiddlewares(),
+             $request,
+             function (Request $request) {
+                 return $this->handle($request)->send();
+             }
+        );
 
         app()->get(EventDispatcher::class)
              ->dispatch(HttpKernelEvent::AFTER_FIRE, new AfterHttpKernelFireEvent($request, $response))
