@@ -6,14 +6,14 @@ use Espricho\Components\Application\Onion;
 use Espricho\Components\Contracts\Middleware;
 use Espricho\Components\Contracts\HttpKernelEvent;
 use Espricho\Components\Routes\Events\RouteResolvedEvent;
-use function is_string;
-use function is_subclass_of;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Espricho\Components\Http\Providers\RequestParameterProvider;
 use Espricho\Components\Http\Exceptions\InvalidMiddlewareClassException;
 
-use function is_a;
 use function sprintf;
+use function is_string;
 use function class_exists;
+use function is_subclass_of;
 
 /**
  * Class UrlMatchedMiddlewareSubscriber provides event of route matching
@@ -64,7 +64,9 @@ class UrlMatchedMiddlewareSubscriber implements EventSubscriberInterface
         }
 
         if (!empty($toRun)) {
-            Onion::run($toRun);
+            // it's a route middleware and we don't have any response
+            Onion::run($toRun, app()->getParameter(RequestParameterProvider::PROVIDE));
+
         }
     }
 }
