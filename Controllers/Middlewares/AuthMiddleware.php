@@ -23,7 +23,7 @@ class AuthMiddleware implements Middleware
      * @inheritdoc
      * @throws InvalidTokenException
      */
-    public function handle(Request $request, ?Response $response, callable $next)
+    public function handle(Request $request, callable $next): ?Response
     {
         if (
 
@@ -41,6 +41,6 @@ class AuthMiddleware implements Middleware
             throw new InvalidTokenException("The request is unauthorized.");
         }
 
-        return $next($request, $response);
+        return $next($request);
     }
 }
