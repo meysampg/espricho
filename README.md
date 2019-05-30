@@ -1,4 +1,6 @@
 # Espricho [WIP]
+[![Maintainability](https://api.codeclimate.com/v1/badges/b3022c87609aaee11faa/maintainability)](https://codeclimate.com/github/meysampg/espricho/maintainability)
+
 Espricho is a lightwieght framework for php7, based on 
 [Symfony](https://symfony.com) components with a built-in 
 modular system support.

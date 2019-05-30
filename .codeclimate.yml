@@ -1,0 +1,15 @@
+plugins:
+  phan:
+    enabled: true
+    config:
+      file_extensions: "php"
+  phpcodesniffer:
+    enabled: true
+    config:
+      standard: "PSR1,PSR2"
+      ignore_warnings: true
+  phpmd:
+    enabled: true
+    config:
+      file_extensions: "php"
+      rulesets: "unusedcode,codesize,naming"
