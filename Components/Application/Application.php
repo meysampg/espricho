@@ -15,7 +15,9 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 use function is_a;
 use function sprintf;
+use function realpath;
 use function is_string;
+use function str_replace;
 
 /**
  * Class Application provides the core application class
@@ -175,6 +177,18 @@ class Application extends ContainerBuilder
         }
 
         $this->middlewares[$alias] = $middleware;
+    }
+
+    /**
+     * Get absolute path from the root of project
+     *
+     * @param string $path
+     *
+     * @return string
+     */
+    public function getPath(string $path = ''): string
+    {
+        return realpath(str_replace('/', DIRECTORY_SEPARATOR, __DIR__ . '/../../' . $path));
     }
 
     /**
