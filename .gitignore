@@ -3,3 +3,6 @@
 
 # Vendor folder
 /vendor
+
+# Environmental files
+.env

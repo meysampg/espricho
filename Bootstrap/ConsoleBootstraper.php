@@ -1,5 +1,8 @@
 <?php
 
+namespace Espricho\Bootstrap;
+
+use Espricho\Components\Application\Bootstraper;
 use Espricho\Components\Console\Providers\ConsoleProvider;
 use Espricho\Components\Console\Providers\HelperSetProvider;
 use Espricho\Components\Databases\Providers\OrmCommandProvider;
@@ -7,31 +10,37 @@ use Espricho\Components\Databases\Providers\OrmCacheCommandProvider;
 use Espricho\Components\Databases\Providers\MigrationCommandProvider;
 
 /**
- * fire composer autoloader!
+ * Class ConsoleBootstraper provides console bootstraper
  */
-require_once __DIR__ . "{$ds}Bootstraper.php";
+class ConsoleBootstraper extends Bootstraper
+{
+    /**
+     * @inheritdoc
+     */
+    public function serviceProviders(): array
+    {
+        return [
+             ConsoleProvider::class,
+             HelperSetProvider::class,
+             OrmCommandProvider::class,
+             OrmCacheCommandProvider::class,
+             MigrationCommandProvider::class,
+        ];
+    }
 
-/**
- * Register console kernel provider
- */
-$app->registerServiceProvider(ConsoleProvider::class);
+    /**
+     * @inheritdoc
+     */
+    public function extensions(): array
+    {
+        return [];
+    }
 
-/**
- * Register helper set of console
- */
-$app->registerServiceProvider(HelperSetProvider::class);
-
-/**
- * Register ORM generator commands
- */
-$app->registerServiceProvider(OrmCommandProvider::class);
-
-/**
- * Register ORM cache clear commands
- */
-$app->registerServiceProvider(OrmCacheCommandProvider::class);
-
-/**
- * Register migration commands
- */
-$app->registerServiceProvider(MigrationCommandProvider::class);
+    /**
+     * @inheritdoc
+     */
+    public function bootParameters(): array
+    {
+        return [];
+    }
+}

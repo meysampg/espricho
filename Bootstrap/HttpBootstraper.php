@@ -1,13 +1,38 @@
 <?php
 
-/**
- * fire composer autoloader!
- */
-require_once __DIR__ . "{$ds}Bootstraper.php";
+namespace Espricho\Bootstrap;
 
+use Espricho\Components\Application\Bootstraper;
 use Espricho\Components\Http\Providers\HttpKernelProvider;
 
 /**
- * Register Http kernel as the main kernel of application
+ * Class HttpBootstraper bootstrap HTTP application
  */
-$app->registerServiceProvider(HttpKernelProvider::class);
+class HttpBootstraper extends Bootstraper
+{
+    /**
+     * @inheritdoc
+     */
+    public function extensions(): array
+    {
+        return [];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function serviceProviders(): array
+    {
+        return [
+             HttpKernelProvider::class,
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function bootParameters(): array
+    {
+        return [];
+    }
+}

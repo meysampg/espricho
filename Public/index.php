@@ -1,13 +1,19 @@
 <?php
+/**
+ * Load autoloader
+ */
+$ds   = DIRECTORY_SEPARATOR;
+$root = __DIR__ . "{$ds}..";
+require_once "{$root}{$ds}vendor{$ds}autoload.php";
+
+use Espricho\Bootstrap\HttpBootstraper;
 
 /**
  * Get the HTTP boostraper...
  */
-
-$ds = DIRECTORY_SEPARATOR;
-require_once __DIR__ . "{$ds}..{$ds}Bootstrap{$ds}HttpBootstraper.php";
+$bootstraper = new HttpBootstraper($root);
 
 /**
  * And GO ON!
  */
-return app()->fire();
+return $bootstraper->getApp()->fire();

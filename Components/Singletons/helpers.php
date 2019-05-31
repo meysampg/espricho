@@ -3,7 +3,7 @@
 use Espricho\Components\Contracts\Middleware;
 use Espricho\Components\Singletons\Application;
 use Espricho\Components\Databases\EntityManager;
-use Espricho\Components\Configs\ConfigCollection;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
  * Put all singletons on this file as a helper to access to them with a global
@@ -14,13 +14,13 @@ if (!function_exists('app')) {
     /**
      * Return an instance of application
      *
-     * @param ConfigCollection|null $config
+     * @param ParameterBagInterface|null $bag
      *
      * @return \Espricho\Components\Application\Application
      */
-    function app(ConfigCollection $config = null)
+    function app(ParameterBagInterface $bag = null)
     {
-        return Application::getInstance($config);
+        return Application::getInstance($bag);
     }
 }
 
@@ -91,5 +91,25 @@ if (!function_exists('check_hash')) {
     function check_hash(string $s, string $hash): bool
     {
         return password_verify($s, $hash);
+    }
+}
+
+if (!function_exists('env')) {
+    /**
+     * Return an environmental variable value
+     *
+     * @param string $key
+     * @param mixed  $default
+     *
+     * @return null|mixed
+     */
+    function env(string $key, $default = null)
+    {
+        $key = strtoupper($key);
+        if (isset($_ENV[$key])) {
+            return $_ENV[$key];
+        }
+
+        return $default;
     }
 }

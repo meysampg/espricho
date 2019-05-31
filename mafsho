@@ -1,10 +1,19 @@
 #!/usr/bin/env php
 <?php
-
+/**
+ * Load autoloader
+ */
 $ds = DIRECTORY_SEPARATOR;
-require __DIR__ . "{$ds}Bootstrap{$ds}ConsoleBootstraper.php";
+require __DIR__ . "{$ds}vendor{$ds}autoload.php";
+
+use Espricho\Bootstrap\ConsoleBootstraper;
+
+/**
+ * Get the console boostraper...
+ */
+$bootstraper = new ConsoleBootstraper(__DIR__);
 
 /**
  * Mafsho is a console command which provides operations in a CMD!
  */
-exit($app->fire());
+exit($bootstraper->getApp()->fire());

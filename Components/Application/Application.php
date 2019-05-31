@@ -3,12 +3,14 @@
 namespace Espricho\Components\Application;
 
 use Exception;
-use Symfony\Component\Debug\Debug;
+use Espricho\Components\Helpers\Os;
 use Espricho\Components\Contracts\Middleware;
-use Espricho\Components\Configs\ConfigCollection;
 use Espricho\Components\Contracts\KernelInterface;
 use Espricho\Components\Contracts\Authenticatable;
+use Espricho\Components\Contracts\ApplicationInterface;
+use Espricho\Components\Contracts\ConfigManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Espricho\Components\Configs\Traits\ConfigCommonMethodsTrait;
 use Espricho\Components\Http\Exceptions\InvalidMiddlewareClassException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -24,7 +26,7 @@ use function str_replace;
  *
  * @package Espricho\Components\Application
  */
-class Application extends ContainerBuilder
+class Application extends ContainerBuilder implements ApplicationInterface
 {
     use ConfigCommonMethodsTrait;
 
@@ -48,22 +50,6 @@ class Application extends ContainerBuilder
      * @var array
      */
     protected $middlewares = [];
-
-    /**
-     * Application constructor.
-     *
-     * @param ConfigCollection           $configs
-     * @param ParameterBagInterface|null $parameterBag
-     */
-    public function __construct(ConfigCollection $configs, ParameterBagInterface $parameterBag = null)
-    {
-        $this->configs = $configs;
-
-        date_default_timezone_set($configs->get('app.timezone', 'UTC'));
-        $this->setDebugBehaviour();
-
-        parent::__construct($parameterBag);
-    }
 
     /**
      * fire up the application
@@ -192,17 +178,60 @@ class Application extends ContainerBuilder
     }
 
     /**
-     * Set the debugging behaviour
+     * Get root of project
+     *
+     * @return string
      */
-    protected function setDebugBehaviour()
+    public function getProjectDir(): string
     {
-        /**
-         * Enable debug mode based on the configuration
-         */
-        if ($this->getConfig('app.debug', false)) {
-            Debug::enable();
-            ini_set('display_errors', 1);
-            error_reporting(-1);
-        }
+        return Os::getPathBasedOnTheFile($this, 'composer.json');
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getEventManager(): EventDispatcherInterface
+    {
+        return $this->get(EventDispatcherInterface::class);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setEventManager(EventDispatcherInterface $eventManager)
+    {
+        $this->set(EventDispatcherInterface::class, $eventManager);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getConfigManager(): ConfigManagerInterface
+    {
+        return $this->get(ConfigManagerInterface::class);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setConfigManager(ConfigManagerInterface $configManager)
+    {
+        $this->set(ConfigManagerInterface::class, $configManager);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getKernel(): KernelInterface
+    {
+        return $this->get(KernelInterface::class);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setKernel(KernelInterface $kernel)
+    {
+        $this->set(KernelInterface::class, $kernel);
     }
 }
