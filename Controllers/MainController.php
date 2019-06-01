@@ -19,8 +19,8 @@ class MainController extends Controller
     public function index()
     {
         return [
-             'name'    => app()->getConfig('app.name'),
-             'version' => app()->getConfig('app.version'),
+             'name'    => sys()->getConfig('sys.name'),
+             'version' => sys()->getConfig('sys.version'),
         ];
     }
 }
