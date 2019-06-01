@@ -24,8 +24,8 @@ class ResponseJsonerListenerProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(System $app)
+    public function register(System $system)
     {
-        $app->get(EventDispatcher::class)->addSubscriber(new ResponseJsonerListener);
+        $system->get(EventDispatcher::class)->addSubscriber(new ResponseJsonerListener);
     }
 }

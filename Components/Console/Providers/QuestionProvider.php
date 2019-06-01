@@ -11,8 +11,8 @@ class QuestionProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(System $app)
+    public function register(System $system)
     {
-        $app->register(Question::class, Question::class);
+        $system->register(Question::class, Question::class);
     }
 }

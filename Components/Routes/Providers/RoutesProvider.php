@@ -21,15 +21,15 @@ class RoutesProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(System $app)
+    public function register(System $system)
     {
         $ds = DIRECTORY_SEPARATOR;
-        $app->setParameter(
+        $system->setParameter(
              static::PROVIDE,
              (new RoutesLoader(
                   __DIR__ . "{$ds}..{$ds}..{$ds}..{$ds}Configs",
                   'routes.yaml',
-                  $app->getConfigs()
+                  $system->getConfigs()
              ))->load()
         );
     }

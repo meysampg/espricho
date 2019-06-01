@@ -18,7 +18,7 @@ class ModelUpdatedSubscriberProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(System $app)
+    public function register(System $system)
     {
         em()->getEventManager()->addEventSubscriber(new ModelUpdatedListener);
     }

@@ -20,13 +20,13 @@ class ConfigurationHelperProvider extends AbstractServiceProvider
          ConnectionHelper::class => ConnectionHelperProvider::class,
     ];
 
-    public function register(System $app)
+    public function register(System $system)
     {
-        $app->register(ConfigurationHelper::class, ConfigurationHelper::class)
-            ->setArguments(
+        $system->register(ConfigurationHelper::class, ConfigurationHelper::class)
+               ->setArguments(
                  [
-                      $app->get(ConnectionHelper::class)->getConnection(),
-                      $app->get(Configuration::class),
+                      $system->get(ConnectionHelper::class)->getConnection(),
+                      $system->get(Configuration::class),
                  ]
             )
         ;

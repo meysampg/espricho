@@ -16,8 +16,8 @@ class RequestStackProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(System $app)
+    public function register(System $system)
     {
-        $app->register(RequestStack::class, RequestStack::class);
+        $system->register(RequestStack::class, RequestStack::class);
     }
 }

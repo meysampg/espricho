@@ -84,15 +84,15 @@ class EntityManagerProvider extends AbstractServiceProvider
     /**
      * Return config metadata based on annotation
      *
-     * @param System $app
+     * @param System $system
      *
      * @return \Doctrine\ORM\Configuration
      */
-    private function getConfigs(System $app)
+    private function getConfigs(System $system)
     {
         return Setup::createAnnotationMetadataConfiguration(
-             $app->getConfig('db.orm.entity_paths'),
-             $app->getConfig('app.debug'),
+             $system->getConfig('db.orm.entity_paths'),
+             $system->getConfig('app.debug'),
              null,
              null,
              false

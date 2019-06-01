@@ -22,8 +22,8 @@ class RequestParameterProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(System $app)
+    public function register(System $system)
     {
-        $app->setParameter(static::PROVIDE, Request::createFromGlobals());
+        $system->setParameter(static::PROVIDE, Request::createFromGlobals());
     }
 }

@@ -21,12 +21,12 @@ class OrmCommandProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(System $app)
+    public function register(System $system)
     {
-        $app->get(KernelInterface::class)->add(new GenerateEntitiesCommand);
-        $app->get(KernelInterface::class)->add(new GenerateRepositoriesCommand);
-        $app->get(KernelInterface::class)->add(new MappingDescribeCommand);
-        $app->get(KernelInterface::class)->add(new ValidateSchemaCommand);
-        $app->get(KernelInterface::class)->add(new InfoCommand);
+        $system->get(KernelInterface::class)->add(new GenerateEntitiesCommand);
+        $system->get(KernelInterface::class)->add(new GenerateRepositoriesCommand);
+        $system->get(KernelInterface::class)->add(new MappingDescribeCommand);
+        $system->get(KernelInterface::class)->add(new ValidateSchemaCommand);
+        $system->get(KernelInterface::class)->add(new InfoCommand);
     }
 }

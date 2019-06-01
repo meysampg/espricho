@@ -16,9 +16,9 @@ class AuthServiceProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(System $app)
+    public function register(System $system)
     {
-        $app->register(Auth::class, Auth::class);
-        $app->setAlias('auth', Auth::class);
+        $system->register(Auth::class, Auth::class);
+        $system->setAlias('auth', Auth::class);
     }
 }

@@ -29,13 +29,13 @@ class MigrationCommandProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(System $app)
+    public function register(System $system)
     {
-        $app->get(KernelInterface::class)->add(new GenerateCommand());
-        $app->get(KernelInterface::class)->add(new DiffCommand());
-        $app->get(KernelInterface::class)->add(new MigrateCommand());
-        $app->get(KernelInterface::class)->add(new RollupCommand());
-        $app->get(KernelInterface::class)->add(new StatusCommand());
-        $app->get(KernelInterface::class)->add(new DumpSchemaCommand());
+        $system->get(KernelInterface::class)->add(new GenerateCommand());
+        $system->get(KernelInterface::class)->add(new DiffCommand());
+        $system->get(KernelInterface::class)->add(new MigrateCommand());
+        $system->get(KernelInterface::class)->add(new RollupCommand());
+        $system->get(KernelInterface::class)->add(new StatusCommand());
+        $system->get(KernelInterface::class)->add(new DumpSchemaCommand());
     }
 }

@@ -22,13 +22,13 @@ class LoggerProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(System $app)
+    public function register(System $system)
     {
-        $path = $app->getPath('Runtime/Logs/espricho.log');
-        $app->register(StreamHandler::class, StreamHandler::class)
-            ->setArguments([$path, Logger::DEBUG])
+        $path = $system->getPath('Runtime/Logs/espricho.log');
+        $system->register(StreamHandler::class, StreamHandler::class)
+               ->setArguments([$path, Logger::DEBUG])
         ;
-        $app->register(LoggerInterface::class, Logger::class)
+        $system->register(LoggerInterface::class, Logger::class)
             //->setArguments(['Espricho', [new Reference(StreamHandler::class)]])
         ;
     }

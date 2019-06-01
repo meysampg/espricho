@@ -27,7 +27,7 @@ class UrlMatchedMiddlewareSubscribeProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(System $app)
+    public function register(System $system)
     {
         service(EventDispatcher::class)->addSubscriber(new UrlMatchedMiddlewareSubscriber);
     }

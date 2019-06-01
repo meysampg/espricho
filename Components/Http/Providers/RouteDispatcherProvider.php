@@ -27,13 +27,13 @@ class RouteDispatcherProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(System $app)
+    public function register(System $system)
     {
-        $app->get(EventDispatcher::class)
-            ->addSubscriber(
+        $system->get(EventDispatcher::class)
+               ->addSubscriber(
                  new RouterListener(
-                      $app->get(UrlMatcher::class),
-                      $app->get(RequestStack::class)
+                      $system->get(UrlMatcher::class),
+                      $system->get(RequestStack::class)
                  )
             )
         ;

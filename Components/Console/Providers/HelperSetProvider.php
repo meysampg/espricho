@@ -32,21 +32,21 @@ class HelperSetProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(System $app)
+    public function register(System $system)
     {
-        $app->register(HelperSet::class, HelperSet::class)
-            ->addArgument(
+        $system->register(HelperSet::class, HelperSet::class)
+               ->addArgument(
                  [
-                      "db"            => $app->get(ConnectionHelper::class),
-                      "configuration" => $app->get(ConfigurationHelper::class),
-                      "em"            => $app->get(EntityManagerHelper::class),
-                      "question"      => $app->get(QuestionHelper::class),
+                      "db"            => $system->get(ConnectionHelper::class),
+                      "configuration" => $system->get(ConfigurationHelper::class),
+                      "em"            => $system->get(EntityManagerHelper::class),
+                      "question"      => $system->get(QuestionHelper::class),
                  ]
             )
         ;
 
-        $app->get(KernelInterface::class)
-            ->setHelperSet($app->get(HelperSet::class))
+        $system->get(KernelInterface::class)
+               ->setHelperSet($system->get(HelperSet::class))
         ;
     }
 }

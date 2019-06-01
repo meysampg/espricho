@@ -17,13 +17,13 @@ class ConsoleProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(System $app)
+    public function register(System $system)
     {
-        $app->register(KernelInterface::class, Console::class)
-            ->setArguments(
+        $system->register(KernelInterface::class, Console::class)
+               ->setArguments(
                  [
-                      $app->getConfig('app.name', 'Espricho'),
-                      $app->getConfig('app.version', '0.1'),
+                      $system->getConfig('app.name', 'Espricho'),
+                      $system->getConfig('app.version', '0.1'),
                  ]
             )
         ;

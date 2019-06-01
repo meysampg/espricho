@@ -22,13 +22,13 @@ class OrmCacheCommandProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(System $app)
+    public function register(System $system)
     {
-        $app->get(KernelInterface::class)->add(new EntityRegionCommand);
-        $app->get(KernelInterface::class)->add(new CollectionRegionCommand);
-        $app->get(KernelInterface::class)->add(new MetadataCommand);
-        $app->get(KernelInterface::class)->add(new QueryCommand);
-        $app->get(KernelInterface::class)->add(new QueryRegionCommand);
-        $app->get(KernelInterface::class)->add(new ResultCommand);
+        $system->get(KernelInterface::class)->add(new EntityRegionCommand);
+        $system->get(KernelInterface::class)->add(new CollectionRegionCommand);
+        $system->get(KernelInterface::class)->add(new MetadataCommand);
+        $system->get(KernelInterface::class)->add(new QueryCommand);
+        $system->get(KernelInterface::class)->add(new QueryRegionCommand);
+        $system->get(KernelInterface::class)->add(new ResultCommand);
     }
 }

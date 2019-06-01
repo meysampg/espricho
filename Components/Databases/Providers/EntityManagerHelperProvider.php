@@ -16,10 +16,10 @@ class EntityManagerHelperProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(System $app)
+    public function register(System $system)
     {
-        $app->register(EntityManagerHelper::class, EntityManagerHelper::class)
-            ->addArgument($app->get(EntityManager::class))
+        $system->register(EntityManagerHelper::class, EntityManagerHelper::class)
+               ->addArgument($system->get(EntityManager::class))
         ;
     }
 }

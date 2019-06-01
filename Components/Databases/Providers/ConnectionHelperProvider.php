@@ -21,10 +21,10 @@ class ConnectionHelperProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(System $app)
+    public function register(System $system)
     {
-        $app->register(ConnectionHelper::class, ConnectionHelper::class)
-            ->addArgument($app->get(EntityManager::class)->getConnection())
+        $system->register(ConnectionHelper::class, ConnectionHelper::class)
+               ->addArgument($system->get(EntityManager::class)->getConnection())
         ;
     }
 }

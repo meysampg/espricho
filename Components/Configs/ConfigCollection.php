@@ -62,6 +62,7 @@ class ConfigCollection implements IteratorAggregate, Countable
      *
      * @param string $name
      * @param mixed  $defaults
+     * @param string $del
      *
      * @return mixed
      */

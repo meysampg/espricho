@@ -16,8 +16,8 @@ class EventDispatcherProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(System $app)
+    public function register(System $system)
     {
-        $app->register(EventDispatcher::class, EventDispatcher::class);
+        $system->register(EventDispatcher::class, EventDispatcher::class);
     }
 }

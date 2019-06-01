@@ -16,10 +16,10 @@ class QuestionHelperProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(System $app)
+    public function register(System $system)
     {
-        $app->register(QuestionHelper::class, QuestionHelper::class)
-            ->addArgument(Question::class)
+        $system->register(QuestionHelper::class, QuestionHelper::class)
+               ->addArgument(Question::class)
         ;
     }
 }

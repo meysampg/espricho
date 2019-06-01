@@ -28,10 +28,10 @@ class UrlMatcherProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(System $app)
+    public function register(System $system)
     {
-        $app->register(UrlMatcher::class, MyUrlMatcher::class)
-            ->setArguments([$app->getParameterHolder(RoutesProvider::PROVIDE), new Reference(RequestContext::class)])
+        $system->register(UrlMatcher::class, MyUrlMatcher::class)
+               ->setArguments([$system->getParameterHolder(RoutesProvider::PROVIDE), new Reference(RequestContext::class)])
         ;
     }
 }

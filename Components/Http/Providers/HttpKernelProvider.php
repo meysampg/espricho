@@ -36,10 +36,10 @@ class HttpKernelProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(System $app)
+    public function register(System $system)
     {
-        $app->register(KernelInterface::class, HttpKernel::class)
-            ->setArguments(
+        $system->register(KernelInterface::class, HttpKernel::class)
+               ->setArguments(
                  [
                       new Reference(EventDispatcher::class),
                       new Reference(ControllerResolver::class),

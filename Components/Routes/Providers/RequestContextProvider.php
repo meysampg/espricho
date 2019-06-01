@@ -16,8 +16,8 @@ class RequestContextProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(System $app)
+    public function register(System $system)
     {
-        $app->register(RequestContext::class, RequestContext::class);
+        $system->register(RequestContext::class, RequestContext::class);
     }
 }

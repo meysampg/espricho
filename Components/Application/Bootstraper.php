@@ -22,7 +22,7 @@ use function in_array;
 abstract class Bootstraper
 {
     /**
-     * The application instance
+     * The system instance
      *
      * @var System
      */
@@ -44,7 +44,7 @@ abstract class Bootstraper
      */
     public function __construct(string $envPath)
     {
-        $envPath = realpath(rtrim($envPath, DIRECTORY_SEPARATOR."/") . DIRECTORY_SEPARATOR . ".env");
+        $envPath = realpath(rtrim($envPath, DIRECTORY_SEPARATOR . "/") . DIRECTORY_SEPARATOR . ".env");
 
         try {
             EnvLoader::getInstance()->loadEnv($envPath, 'ENV');

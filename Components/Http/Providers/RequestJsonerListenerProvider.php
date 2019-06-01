@@ -24,8 +24,8 @@ class RequestJsonerListenerProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(System $app)
+    public function register(System $system)
     {
-        $app->get(EventDispatcher::class)->addSubscriber(new RequestJsonerListener);
+        $system->get(EventDispatcher::class)->addSubscriber(new RequestJsonerListener);
     }
 }

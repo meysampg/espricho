@@ -16,8 +16,8 @@ class ControllerResolverProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(System $app)
+    public function register(System $system)
     {
-        $app->register(ControllerResolver::class, ControllerResolver::class);
+        $system->register(ControllerResolver::class, ControllerResolver::class);
     }
 }

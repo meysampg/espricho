@@ -23,21 +23,21 @@ class MigrationConfigurationProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(System $app)
+    public function register(System $system)
     {
-        $app->register(Configuration::class, Configuration::class)
-            ->addArgument($app->get(EntityManager::class)->getConnection())
+        $system->register(Configuration::class, Configuration::class)
+               ->addArgument($system->get(EntityManager::class)->getConnection())
         ;
 
-        $mc = $app->get(Configuration::class);
-        $mc->setName($app->getConfig('migration.name', 'Espricho Migration'));
-        $mc->setMigrationsNamespace($app->getConfig('migration.namespace', 'Espricho\Migrations'));
-        $mc->setMigrationsTableName($app->getConfig('migration.table_name', 'migrations'));
-        $mc->setMigrationsColumnName($app->getConfig('migration.column_name', 'version'));
-        $mc->setMigrationsColumnLength($app->getConfig('migration.column_length', 255));
-        $mc->setMigrationsExecutedAtColumnName($app->getConfig('migration.executed_at_column_name', 'executed_at'));
-        $mc->setMigrationsDirectory($app->getConfig('migration.directory', static::getDefaultDirectory()));
-        $mc->setAllOrNothing($app->getConfig('migration.all_or_nothing', true));
+        $mc = $system->get(Configuration::class);
+        $mc->setName($system->getConfig('migration.name', 'Espricho Migration'));
+        $mc->setMigrationsNamespace($system->getConfig('migration.namespace', 'Espricho\Migrations'));
+        $mc->setMigrationsTableName($system->getConfig('migration.table_name', 'migrations'));
+        $mc->setMigrationsColumnName($system->getConfig('migration.column_name', 'version'));
+        $mc->setMigrationsColumnLength($system->getConfig('migration.column_length', 255));
+        $mc->setMigrationsExecutedAtColumnName($system->getConfig('migration.executed_at_column_name', 'executed_at'));
+        $mc->setMigrationsDirectory($system->getConfig('migration.directory', static::getDefaultDirectory()));
+        $mc->setAllOrNothing($system->getConfig('migration.all_or_nothing', true));
     }
 
     /**

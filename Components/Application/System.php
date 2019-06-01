@@ -11,7 +11,6 @@ use Espricho\Components\Contracts\ApplicationInterface;
 use Espricho\Components\Contracts\ConfigManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Espricho\Components\Configs\Traits\ConfigCommonMethodsTrait;
 use Espricho\Components\Http\Exceptions\InvalidMiddlewareClassException;
 
 use function is_a;
@@ -28,8 +27,6 @@ use function str_replace;
  */
 class System extends ContainerBuilder implements ApplicationInterface
 {
-    use ConfigCommonMethodsTrait;
-
     /**
      * Defines service providers
      *

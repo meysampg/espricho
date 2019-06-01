@@ -16,8 +16,8 @@ class ArgumentResolverProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(System $app)
+    public function register(System $system)
     {
-        $app->register(ArgumentResolver::class, ArgumentResolver::class);
+        $system->register(ArgumentResolver::class, ArgumentResolver::class);
     }
 }

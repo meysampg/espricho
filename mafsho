@@ -16,4 +16,4 @@ $bootstraper = new ConsoleBootstraper(__DIR__);
 /**
  * Mafsho is a console command which provides operations in a CMD!
  */
-exit($bootstraper->getApp()->fire());
+exit($bootstraper->getSystem()->fire());
