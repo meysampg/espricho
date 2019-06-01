@@ -41,7 +41,7 @@ class AuthMiddleware implements Middleware
             throw new InvalidTokenException("The request is unauthorized.");
         }
 
-        app()->setUser(service('auth')->getUser($token));
+        sys()->setUser(service('auth')->getUser($token));
 
         return $next($request);
     }

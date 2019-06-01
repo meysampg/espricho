@@ -15,6 +15,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 use Espricho\Components\Auth\Exceptions\UserModelNotFound;
 
 use function em;
+use function logger;
 use function is_null;
 use function check_hash;
 use function class_exists;
@@ -39,7 +40,7 @@ class Auth
      */
     public function __construct()
     {
-        $userModel = app()->getConfig('auth.model', '');
+        $userModel = sys()->getConfig('auth.model', '');
         if (!class_exists($userModel)) {
             throw new UserModelNotFound("You must specify an auth.model parameter inside auth.yaml file");
         }
@@ -67,14 +68,14 @@ class Auth
             return null;
         }
 
-        app()->setUser($user);
+        sys()->setUser($user);
 
         try {
-            app()->get(EventDispatcher::class)
+            sys()->get(EventDispatcher::class)
                  ->dispatch(Authenticatable::EVENT_LOGGED_IN, new UserLoggedInEvent($user))
             ;
         } catch (Exception $e) {
-            // there is no dispatcher and it's okay ;)
+            logger('info', $e);
         }
 
         return $this->generateToken($user);
@@ -148,7 +149,7 @@ class Auth
         $signer     = new Sha512();
         $validation = new ValidationData();
 
-        return $token->verify($signer, app()->getConfig('auth.secret', 'Espricho')) && $token->validate($validation);
+        return $token->verify($signer, sys()->getConfig('auth.secret', 'Espricho')) && $token->validate($validation);
     }
 
     /**
@@ -177,6 +178,8 @@ class Auth
         try {
             return em()->getRepository($this->userModel);
         } catch (Exception $e) {
+            logger('error', $e);
+
             return null;
         }
     }
@@ -193,7 +196,7 @@ class Auth
         $time   = time();
         $signer = new Sha512();
         $token  = (new Builder())->issuedAt(time())
-                                 ->expiresAt($time + app()->getConfig('auth.expire_time', 3600))
+                                 ->expiresAt($time + sys()->getConfig('auth.expire_time', 3600))
                                  ->withClaim('uid', $user->getId())
         ;
 
@@ -201,6 +204,6 @@ class Auth
             $token->withClaim($claim, $value);
         }
 
-        return (string)$token->getToken($signer, new Key(app()->getConfig('auth.secret', 'Espricho')));
+        return (string)$token->getToken($signer, new Key(sys()->getConfig('auth.secret', 'Espricho')));
     }
 }
