@@ -247,7 +247,7 @@ abstract class Bootstraper
      */
     protected function debuggerInitialize()
     {
-        if (in_array(env('app_env'), ['dev', 'debug', 'test'])) {
+        if (in_array(env('sys_env'), ['dev', 'debug', 'test'])) {
             Debug::enable();
         }
     }
