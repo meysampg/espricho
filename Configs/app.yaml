@@ -1,3 +1,7 @@
 app:
   name: Espricho
   version: 0.1
+  configs_to_load: # make sure there are some files with this name on the configs folder
+  - auth # for example the configs of auth must be under the auth section
+  - db
+  - modules
