@@ -197,7 +197,7 @@ abstract class Bootstraper
     protected function registerExtensions()
     {
         foreach ($this->extensions() as $extension) {
-            $this->getSystem()->registerExtension($extension);
+            $this->getSystem()->registerExtension(new $extension);
         }
     }
 
