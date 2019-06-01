@@ -158,7 +158,7 @@ class ConfigCollection implements IteratorAggregate, Countable, ConfigManagerInt
     public function addCollection(ConfigCollection $collection)
     {
         foreach ($collection->all() as $name => $config) {
-            $this->add($name, $config);
+            $this->mergeOrAdd($name, $config);
         }
     }
 
