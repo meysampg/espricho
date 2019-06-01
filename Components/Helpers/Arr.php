@@ -20,7 +20,7 @@ class Arr
      *
      * @return string
      */
-    public static function Implode(array $arr, string $del): string
+    public static function implode(array $arr, string $del): string
     {
         return implode($del, $arr);
     }
@@ -35,7 +35,7 @@ class Arr
      *
      * @return string
      */
-    public static function ImplodeByPosition(
+    public static function implodeByPosition(
          array $arr,
          string $del,
          int $from,
@@ -45,7 +45,7 @@ class Arr
             $to = count($arr);
         }
 
-        return static::Implode(
+        return static::implode(
              array_slice($arr, $from, $to - $from + 1),
              $del
         );

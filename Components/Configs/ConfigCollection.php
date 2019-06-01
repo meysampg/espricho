@@ -113,7 +113,7 @@ class ConfigCollection implements IteratorAggregate, Countable, ConfigManagerInt
                 return $configs[$key];
             }
 
-            return $configs[$key]->get(Arr::ImplodeByPosition($nameArr, $del, 1), $defaults, $del);
+            return $configs[$key]->get(Arr::implodeByPosition($nameArr, $del, 1), $defaults, $del);
         }
 
         return $defaults;
@@ -136,7 +136,7 @@ class ConfigCollection implements IteratorAggregate, Countable, ConfigManagerInt
              (
                   count($name) > 1
                   && isset($this->configs[$key])
-                  && $this->configs[$key]->has(Arr::ImplodeByPosition($name, $dot, 1))
+                  && $this->configs[$key]->has(Arr::implodeByPosition($name, $dot, 1))
              );
     }
 
