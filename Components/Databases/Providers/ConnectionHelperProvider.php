@@ -2,8 +2,8 @@
 
 namespace Espricho\Components\Databases\Providers;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Espricho\Components\Application\System;
-use Espricho\Components\Databases\EntityManager;
 use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
 use Espricho\Components\Providers\AbstractServiceProvider;
 
@@ -15,7 +15,7 @@ use Espricho\Components\Providers\AbstractServiceProvider;
 class ConnectionHelperProvider extends AbstractServiceProvider
 {
     protected $dependencies = [
-         EntityManager::class => EntityManagerProvider::class,
+         EntityManagerInterface::class => EntityManagerProvider::class,
     ];
 
     /**
@@ -24,7 +24,7 @@ class ConnectionHelperProvider extends AbstractServiceProvider
     public function register(System $system)
     {
         $system->register(ConnectionHelper::class, ConnectionHelper::class)
-               ->addArgument($system->get(EntityManager::class)->getConnection())
+               ->addArgument($system->get(EntityManagerInterface::class)->getConnection())
         ;
     }
 }

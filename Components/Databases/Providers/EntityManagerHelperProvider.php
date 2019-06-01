@@ -2,15 +2,15 @@
 
 namespace Espricho\Components\Databases\Providers;
 
-use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
+use Doctrine\ORM\EntityManagerInterface;
 use Espricho\Components\Application\System;
-use Espricho\Components\Databases\EntityManager;
+use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
 use Espricho\Components\Providers\AbstractServiceProvider;
 
 class EntityManagerHelperProvider extends AbstractServiceProvider
 {
     protected $dependencies = [
-         EntityManager::class => EntityManagerProvider::class,
+         EntityManagerInterface::class => EntityManagerProvider::class,
     ];
 
     /**
@@ -19,7 +19,7 @@ class EntityManagerHelperProvider extends AbstractServiceProvider
     public function register(System $system)
     {
         $system->register(EntityManagerHelper::class, EntityManagerHelper::class)
-               ->addArgument($system->get(EntityManager::class))
+               ->addArgument($system->get(EntityManagerInterface::class))
         ;
     }
 }

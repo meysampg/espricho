@@ -2,8 +2,8 @@
 
 namespace Espricho\Components\Databases\Providers;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Espricho\Components\Application\System;
-use Espricho\Components\Databases\EntityManager;
 use Doctrine\Migrations\Configuration\Configuration;
 use Espricho\Components\Providers\AbstractServiceProvider;
 
@@ -17,7 +17,7 @@ use function sprintf;
 class MigrationConfigurationProvider extends AbstractServiceProvider
 {
     protected $dependencies = [
-         EntityManager::class => EntityManagerProvider::class,
+         EntityManagerInterface::class => EntityManagerProvider::class,
     ];
 
     /**
@@ -26,7 +26,7 @@ class MigrationConfigurationProvider extends AbstractServiceProvider
     public function register(System $system)
     {
         $system->register(Configuration::class, Configuration::class)
-               ->addArgument($system->get(EntityManager::class)->getConnection())
+               ->addArgument($system->get(EntityManagerInterface::class)->getConnection())
         ;
 
         $mc = $system->get(Configuration::class);

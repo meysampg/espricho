@@ -3,6 +3,7 @@
 namespace Espricho\Components\Databases\Providers;
 
 use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\EntityManagerInterface;
 use Espricho\Components\Application\System;
 use Espricho\Components\Databases\EntityManager;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -34,7 +35,7 @@ class EntityManagerProvider extends AbstractServiceProvider
         $dbParams = $this->getDBConfigurations($system->getConfigManager());
         $configs  = $this->getConfigs($system);
 
-        $system->register(EntityManager::class)
+        $system->register(EntityManagerInterface::class)
                ->setFactory([EntityManager::class, 'create'])
                ->setArguments([$dbParams, $configs])
         ;
