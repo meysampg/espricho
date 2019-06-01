@@ -3,9 +3,13 @@
 namespace Espricho\Components\Configs;
 
 use Serializable;
+use Espricho\Components\Helpers\Arr;
 
+use function explode;
 use function serialize;
+use function strtolower;
 use function unserialize;
+use function array_merge_recursive;
 
 /**
  * Class Configuration provides working with a configuration functionality
@@ -20,6 +24,22 @@ class Configuration implements Serializable
      * @var array
      */
     protected $data = [];
+
+    /**
+     * Add a configuration from a raw key
+     *
+     * @param string $key
+     * @param mixed  $value
+     *
+     * @return Configuration
+     */
+    public static function addRaw(string $key, $value): Configuration
+    {
+        $keys      = explode('_', strtolower($key));
+        $unflatted = Arr::deflat($keys, $value);
+
+        return new static($unflatted);
+    }
 
     /**
      * Configuration constructor.
@@ -49,6 +69,17 @@ class Configuration implements Serializable
     public function unserialize($serialized)
     {
         $this->data = unserialize($serialized);
+    }
+
+    /**
+     * Merge a given configuration to the current configuration
+     *
+     * @param string        $key
+     * @param Configuration $configuration
+     */
+    public function merge(string $key, Configuration $configuration)
+    {
+        $this->data = array_merge_recursive($this->data, $configuration->all());
     }
 
     /**

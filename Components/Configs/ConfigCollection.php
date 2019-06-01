@@ -45,8 +45,35 @@ class ConfigCollection implements IteratorAggregate, Countable, ConfigManagerInt
      */
     public function add($name, Configuration $configuration)
     {
-
         $this->configs[$name] = $configuration;
+    }
+
+    /**
+     * Merge a configuration with an already exists
+     *
+     * @param string        $name
+     * @param Configuration $configuration
+     */
+    public function merge(string $name, Configuration $configuration)
+    {
+        $this->configs[$name]->merge($name, $configuration);
+    }
+
+    /**
+     * Merge or add a given configuration
+     *
+     * @param string        $name
+     * @param Configuration $configuration
+     */
+    public function mergeOrAdd(string $name, Configuration $configuration)
+    {
+        if ($this->has($name)) {
+            $this->merge($name, $configuration);
+
+            return;
+        }
+
+        $this->add($name, $configuration);
     }
 
     /**
@@ -172,5 +199,18 @@ class ConfigCollection implements IteratorAggregate, Countable, ConfigManagerInt
     public function count()
     {
         return count($this->configs);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function addRaw(string $key, $value): void
+    {
+        $keys = explode('_', strtolower($key));
+
+        $collectionKey = current($keys);
+        $configKey     = Arr::implodeByPosition($keys, '_', 1);
+
+        $this->mergeOrAdd($collectionKey, Configuration::addRaw($configKey, $value));
     }
 }
