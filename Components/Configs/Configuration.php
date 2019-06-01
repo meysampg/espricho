@@ -74,10 +74,9 @@ class Configuration implements Serializable
     /**
      * Merge a given configuration to the current configuration
      *
-     * @param string        $key
      * @param Configuration $configuration
      */
-    public function merge(string $key, Configuration $configuration)
+    public function merge(Configuration $configuration)
     {
         $this->data = array_merge_recursive($this->data, $configuration->all());
     }

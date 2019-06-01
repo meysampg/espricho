@@ -56,7 +56,7 @@ class ConfigCollection implements IteratorAggregate, Countable, ConfigManagerInt
      */
     public function merge(string $name, Configuration $configuration)
     {
-        $this->configs[$name]->merge($name, $configuration);
+        $this->configs[$name]->merge($configuration);
     }
 
     /**
