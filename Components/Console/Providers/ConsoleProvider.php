@@ -6,6 +6,7 @@ use Espricho\Components\Console\Console;
 use Espricho\Components\Application\System;
 use Espricho\Components\Contracts\KernelInterface;
 use Espricho\Components\Providers\AbstractServiceProvider;
+use Espricho\Components\Application\Providers\SystemEnvVariableToConfigProvider;
 
 /**
  * Class ConsoleProvider register console kernel
@@ -14,6 +15,10 @@ use Espricho\Components\Providers\AbstractServiceProvider;
  */
 class ConsoleProvider extends AbstractServiceProvider
 {
+    protected $dependencies = [
+         SystemEnvVariableToConfigProvider::PROVIDE => SystemEnvVariableToConfigProvider::class,
+    ];
+
     /**
      * @inheritdoc
      */
