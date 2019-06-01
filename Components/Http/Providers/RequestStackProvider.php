@@ -2,7 +2,7 @@
 
 namespace Espricho\Components\Http\Providers;
 
-use Espricho\Components\Application\Application;
+use Espricho\Components\Application\System;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Espricho\Components\Providers\AbstractServiceProvider;
 
@@ -16,7 +16,7 @@ class RequestStackProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(Application $app)
+    public function register(System $app)
     {
         $app->register(RequestStack::class, RequestStack::class);
     }

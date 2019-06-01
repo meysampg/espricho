@@ -3,7 +3,7 @@
 namespace Espricho\Components\Auth\Providers;
 
 use Espricho\Components\Auth\Auth;
-use Espricho\Components\Application\Application;
+use Espricho\Components\Application\System;
 use Espricho\Components\Providers\AbstractServiceProvider;
 
 /**
@@ -16,7 +16,7 @@ class AuthServiceProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(Application $app)
+    public function register(System $app)
     {
         $app->register(Auth::class, Auth::class);
         $app->setAlias('auth', Auth::class);

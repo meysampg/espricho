@@ -4,7 +4,7 @@ namespace Espricho\Components\Http\Providers;
 
 use Espricho\Components\Auth\Auth;
 use Espricho\Components\Http\HttpKernel;
-use Espricho\Components\Application\Application;
+use Espricho\Components\Application\System;
 use Espricho\Components\Contracts\KernelInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\DependencyInjection\Reference;
@@ -36,7 +36,7 @@ class HttpKernelProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(Application $app)
+    public function register(System $app)
     {
         $app->register(KernelInterface::class, HttpKernel::class)
             ->setArguments(

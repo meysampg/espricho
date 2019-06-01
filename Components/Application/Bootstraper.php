@@ -24,12 +24,12 @@ abstract class Bootstraper
     /**
      * The application instance
      *
-     * @var Application
+     * @var System
      */
-    protected $app;
+    protected $system;
 
     /**
-     * Indicate application is booted or not
+     * Indicate system is booted or not
      *
      * @var bool
      */
@@ -45,7 +45,6 @@ abstract class Bootstraper
     public function __construct(string $envPath)
     {
         $envPath = realpath(rtrim($envPath, DIRECTORY_SEPARATOR."/") . DIRECTORY_SEPARATOR . ".env");
-        dump($envPath);
 
         try {
             EnvLoader::getInstance()->loadEnv($envPath, 'ENV');
@@ -61,19 +60,19 @@ abstract class Bootstraper
     }
 
     /**
-     * @return Application
+     * @return System
      */
-    public function getApp(): Application
+    public function getSystem(): System
     {
-        return $this->app;
+        return $this->system;
     }
 
     /**
-     * @param Application $app
+     * @param System $system
      */
-    public function setApp(Application $app): void
+    public function setSystem(System $system): void
     {
-        $this->app = $app;
+        $this->system = $system;
     }
 
     /**
@@ -91,7 +90,7 @@ abstract class Bootstraper
     abstract public function serviceProviders(): array;
 
     /**
-     * A key-value list of parameters to inject into application on boot process
+     * A key-value list of parameters to inject into system on boot process
      *
      * @return array
      */
@@ -107,7 +106,7 @@ abstract class Bootstraper
         }
 
         $this->debuggerInitialize();
-        $this->runApplicationProcess();
+        $this->runSystemProcess();
         $this->registerExtensions();
         $this->registerServices();
 
@@ -141,17 +140,17 @@ abstract class Bootstraper
     }
 
     /**
-     * Start the application process as the main process of the system
+     * Start the root system process as the main process of the system
      */
-    protected function runApplicationProcess()
+    protected function runSystemProcess()
     {
         $bag = $this->makeParameterBag();
 
-        $this->setApp(new Application($bag));
+        $this->setSystem(new System($bag));
     }
 
     /**
-     * Parameter bag which must be injected into the application
+     * Parameter bag which must be injected into the system
      *
      * @return null|ParameterBagInterface
      */
@@ -176,7 +175,7 @@ abstract class Bootstraper
     protected function registerExtensions()
     {
         foreach ($this->extensions() as $extension) {
-            $this->getApp()->registerExtension($extension);
+            $this->getSystem()->registerExtension($extension);
         }
     }
 
@@ -186,7 +185,7 @@ abstract class Bootstraper
     protected function registerServices()
     {
         foreach ($this->serviceProviders() as $service) {
-            $this->getApp()->registerServiceProvider($service);
+            $this->getSystem()->registerServiceProvider($service);
         }
     }
 

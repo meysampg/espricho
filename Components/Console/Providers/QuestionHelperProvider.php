@@ -2,7 +2,7 @@
 
 namespace Espricho\Components\Console\Providers;
 
-use Espricho\Components\Application\Application;
+use Espricho\Components\Application\System;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Espricho\Components\Providers\AbstractServiceProvider;
@@ -16,7 +16,7 @@ class QuestionHelperProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(Application $app)
+    public function register(System $app)
     {
         $app->register(QuestionHelper::class, QuestionHelper::class)
             ->addArgument(Question::class)

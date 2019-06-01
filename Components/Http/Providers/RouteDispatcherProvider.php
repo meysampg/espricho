@@ -2,7 +2,7 @@
 
 namespace Espricho\Components\Http\Providers;
 
-use Espricho\Components\Application\Application;
+use Espricho\Components\Application\System;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -27,7 +27,7 @@ class RouteDispatcherProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(Application $app)
+    public function register(System $app)
     {
         $app->get(EventDispatcher::class)
             ->addSubscriber(

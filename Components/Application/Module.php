@@ -1,6 +1,6 @@
 <?php
 
-namespace Espricho\Components\Http;
+namespace Espricho\Components\Application;
 
 use Espricho\Components\Contracts\ModuleInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

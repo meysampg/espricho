@@ -13,7 +13,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Espricho\Components\Configs\Traits\ConfigCommonMethodsTrait;
 use Espricho\Components\Http\Exceptions\InvalidMiddlewareClassException;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 use function is_a;
 use function sprintf;
@@ -22,11 +21,12 @@ use function is_string;
 use function str_replace;
 
 /**
- * Class Application provides the core application class
+ * Class System provides the operation system functionality. It provides the
+ * communication between the event manager, config manager and the kernel.
  *
  * @package Espricho\Components\Application
  */
-class Application extends ContainerBuilder implements ApplicationInterface
+class System extends ContainerBuilder implements ApplicationInterface
 {
     use ConfigCommonMethodsTrait;
 
@@ -100,9 +100,9 @@ class Application extends ContainerBuilder implements ApplicationInterface
      *
      * @param Authenticatable $user
      *
-     * @return Application
+     * @return System
      */
-    public function setUser(Authenticatable $user): Application
+    public function setUser(Authenticatable $user): System
     {
         $this->authenticated_user = $user;
 

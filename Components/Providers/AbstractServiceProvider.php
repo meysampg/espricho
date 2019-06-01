@@ -2,7 +2,7 @@
 
 namespace Espricho\Components\Providers;
 
-use Espricho\Components\Application\Application;
+use Espricho\Components\Application\System;
 
 /**
  * Class AbstractServiceProvider define a provider for service locating
@@ -28,66 +28,66 @@ abstract class AbstractServiceProvider
     /**
      * Load a service on a given app
      *
-     * @param Application $app
+     * @param System $system
      */
-    public function load(Application $app)
+    public function load(System $system)
     {
-        $this->loadDependencies($app);
-        $this->register($app);
-        $this->loadSuggestions($app);
+        $this->loadDependencies($system);
+        $this->register($system);
+        $this->loadSuggestions($system);
     }
 
     /**
      * Define service providing rules
      *
-     * @param Application $app
+     * @param System $system
      *
      * @return mixed
      */
-    abstract function register(Application $app);
+    abstract function register(System $system);
 
     /**
      * Check a service is loaded or not
      *
-     * @param Application $app
-     * @param string      $service
+     * @param System $system
+     * @param string $service
      *
      * @return bool
      */
-    protected function isLoaded(Application $app, string $service): bool
+    protected function isLoaded(System $system, string $service): bool
     {
-        return $app->has($service);
+        return $system->has($service);
     }
 
     /**
      * Load all dependencies of the service
      *
-     * @param Application $app
+     * @param System $system
      */
-    protected function loadDependencies(Application $app)
+    protected function loadDependencies(System $system)
     {
         foreach ($this->dependencies as $service => $provider) {
-            if ($this->isLoaded($app, $service)) {
+            if ($this->isLoaded($system, $service)) {
                 continue;
             }
 
-            (new $provider)->load($app);
+            (new $provider)->load($system);
         }
     }
 
     /**
      * Load all suggestions of the service
      *
-     * @param Application $app
+     * @param System $system
      */
-    protected function loadSuggestions(Application $app)
+    protected function loadSuggestions(System $system)
     {
         foreach ($this->suggestions as $service => $provider) {
-            if ($this->isLoaded($app, $service)) {
+            if ($this->isLoaded($system, $service)) {
                 continue;
             }
 
-            (new $provider)->load($app);
+            (new $provider)->load($system);
         }
     }
 }

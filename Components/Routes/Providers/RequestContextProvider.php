@@ -3,7 +3,7 @@
 namespace Espricho\Components\Routes\Providers;
 
 use Symfony\Component\Routing\RequestContext;
-use Espricho\Components\Application\Application;
+use Espricho\Components\Application\System;
 use Espricho\Components\Providers\AbstractServiceProvider;
 
 /**
@@ -16,7 +16,7 @@ class RequestContextProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(Application $app)
+    public function register(System $app)
     {
         $app->register(RequestContext::class, RequestContext::class);
     }

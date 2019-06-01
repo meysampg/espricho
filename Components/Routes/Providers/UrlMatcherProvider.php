@@ -3,7 +3,7 @@
 namespace Espricho\Components\Routes\Providers;
 
 use Symfony\Component\Routing\RequestContext;
-use Espricho\Components\Application\Application;
+use Espricho\Components\Application\System;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\DependencyInjection\Reference;
 use Espricho\Components\Routes\UrlMatcher as MyUrlMatcher;
@@ -28,7 +28,7 @@ class UrlMatcherProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(Application $app)
+    public function register(System $app)
     {
         $app->register(UrlMatcher::class, MyUrlMatcher::class)
             ->setArguments([$app->getParameterHolder(RoutesProvider::PROVIDE), new Reference(RequestContext::class)])

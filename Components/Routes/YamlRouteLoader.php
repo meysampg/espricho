@@ -7,7 +7,7 @@ use Symfony\Component\Config\FileLocator;
 /**
  * Class YamlRouteLoader it loads `routes.yaml` on given directory
  *
- * @package Espricho\Components\Application
+ * @package Espricho\Components\System
  */
 class YamlRouteLoader
 {

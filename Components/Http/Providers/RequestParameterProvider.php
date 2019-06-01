@@ -3,7 +3,7 @@
 namespace Espricho\Components\Http\Providers;
 
 use Symfony\Component\HttpFoundation\Request;
-use Espricho\Components\Application\Application;
+use Espricho\Components\Application\System;
 use Espricho\Components\Providers\AbstractServiceProvider;
 
 /**
@@ -22,7 +22,7 @@ class RequestParameterProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(Application $app)
+    public function register(System $app)
     {
         $app->setParameter(static::PROVIDE, Request::createFromGlobals());
     }

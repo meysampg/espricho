@@ -3,7 +3,7 @@
 namespace Espricho\Components\Console\Providers;
 
 use Symfony\Component\Console\Helper\HelperSet;
-use Espricho\Components\Application\Application;
+use Espricho\Components\Application\System;
 use Espricho\Components\Contracts\KernelInterface;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
@@ -32,7 +32,7 @@ class HelperSetProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(Application $app)
+    public function register(System $app)
     {
         $app->register(HelperSet::class, HelperSet::class)
             ->addArgument(

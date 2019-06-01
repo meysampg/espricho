@@ -2,7 +2,7 @@
 
 namespace Espricho\Components\Http\Providers;
 
-use Espricho\Components\Application\Application;
+use Espricho\Components\Application\System;
 use Espricho\Components\Providers\AbstractServiceProvider;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
 
@@ -16,7 +16,7 @@ class ArgumentResolverProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(Application $app)
+    public function register(System $app)
     {
         $app->register(ArgumentResolver::class, ArgumentResolver::class);
     }

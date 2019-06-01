@@ -2,7 +2,7 @@
 
 namespace Espricho\Components\Routes\Providers;
 
-use Espricho\Components\Application\Application;
+use Espricho\Components\Application\System;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Espricho\Components\Providers\AbstractServiceProvider;
 use Espricho\Components\Application\Providers\EventDispatcherProvider;
@@ -27,7 +27,7 @@ class UrlMatchedMiddlewareSubscribeProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(Application $app)
+    public function register(System $app)
     {
         service(EventDispatcher::class)->addSubscriber(new UrlMatchedMiddlewareSubscriber);
     }

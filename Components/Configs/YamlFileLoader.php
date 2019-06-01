@@ -16,7 +16,7 @@ use function is_string;
 /**
  * Class YamlFileLoader Loads a given YAML file as a ConfigCollection
  *
- * @package Espricho\Components\Application
+ * @package Espricho\Components\System
  */
 class YamlFileLoader extends FileLoader
 {

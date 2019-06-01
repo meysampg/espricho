@@ -2,7 +2,7 @@
 
 namespace Espricho\Components\Databases\Providers;
 
-use Espricho\Components\Application\Application;
+use Espricho\Components\Application\System;
 use Espricho\Components\Contracts\KernelInterface;
 use Espricho\Components\Providers\AbstractServiceProvider;
 use Doctrine\ORM\Tools\Console\Command\ClearCache\QueryCommand;
@@ -22,7 +22,7 @@ class OrmCacheCommandProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(Application $app)
+    public function register(System $app)
     {
         $app->get(KernelInterface::class)->add(new EntityRegionCommand);
         $app->get(KernelInterface::class)->add(new CollectionRegionCommand);

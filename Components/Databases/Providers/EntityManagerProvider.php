@@ -4,7 +4,7 @@ namespace Espricho\Components\Databases\Providers;
 
 use Doctrine\ORM\Tools\Setup;
 use Espricho\Components\Databases\EntityManager;
-use Espricho\Components\Application\Application;
+use Espricho\Components\Application\System;
 use Espricho\Components\Configs\ConfigCollection;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Espricho\Components\Providers\AbstractServiceProvider;
@@ -25,7 +25,7 @@ class EntityManagerProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(Application $app)
+    public function register(System $app)
     {
         $dbParams = $this->getDBConfigurations($app->getConfigs());
         $configs  = $this->getConfigs($app);
@@ -84,11 +84,11 @@ class EntityManagerProvider extends AbstractServiceProvider
     /**
      * Return config metadata based on annotation
      *
-     * @param Application $app
+     * @param System $app
      *
      * @return \Doctrine\ORM\Configuration
      */
-    private function getConfigs(Application $app)
+    private function getConfigs(System $app)
     {
         return Setup::createAnnotationMetadataConfiguration(
              $app->getConfig('db.orm.entity_paths'),

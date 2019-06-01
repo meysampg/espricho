@@ -2,7 +2,7 @@
 
 namespace Espricho\Components\Databases\Providers;
 
-use Espricho\Components\Application\Application;
+use Espricho\Components\Application\System;
 use Espricho\Components\Databases\EntityManager;
 use Doctrine\Migrations\Configuration\Configuration;
 use Espricho\Components\Providers\AbstractServiceProvider;
@@ -23,7 +23,7 @@ class MigrationConfigurationProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(Application $app)
+    public function register(System $app)
     {
         $app->register(Configuration::class, Configuration::class)
             ->addArgument($app->get(EntityManager::class)->getConnection())

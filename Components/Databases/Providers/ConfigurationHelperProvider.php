@@ -2,7 +2,7 @@
 
 namespace Espricho\Components\Databases\Providers;
 
-use Espricho\Components\Application\Application;
+use Espricho\Components\Application\System;
 use Doctrine\Migrations\Configuration\Configuration;
 use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
 use Espricho\Components\Providers\AbstractServiceProvider;
@@ -20,7 +20,7 @@ class ConfigurationHelperProvider extends AbstractServiceProvider
          ConnectionHelper::class => ConnectionHelperProvider::class,
     ];
 
-    public function register(Application $app)
+    public function register(System $app)
     {
         $app->register(ConfigurationHelper::class, ConfigurationHelper::class)
             ->setArguments(

@@ -2,7 +2,7 @@
 
 namespace Espricho\Components\Databases\Providers;
 
-use Espricho\Components\Application\Application;
+use Espricho\Components\Application\System;
 use Espricho\Components\Contracts\KernelInterface;
 use Doctrine\Migrations\Configuration\Configuration;
 use Doctrine\Migrations\Tools\Console\Command\DiffCommand;
@@ -29,7 +29,7 @@ class MigrationCommandProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(Application $app)
+    public function register(System $app)
     {
         $app->get(KernelInterface::class)->add(new GenerateCommand());
         $app->get(KernelInterface::class)->add(new DiffCommand());

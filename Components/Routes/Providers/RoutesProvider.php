@@ -3,7 +3,7 @@
 namespace Espricho\Components\Routes\Providers;
 
 use Espricho\Components\Routes\RoutesLoader;
-use Espricho\Components\Application\Application;
+use Espricho\Components\Application\System;
 use Espricho\Components\Providers\AbstractServiceProvider;
 
 /**
@@ -21,7 +21,7 @@ class RoutesProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(Application $app)
+    public function register(System $app)
     {
         $ds = DIRECTORY_SEPARATOR;
         $app->setParameter(

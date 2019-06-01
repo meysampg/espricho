@@ -2,7 +2,7 @@
 
 namespace Espricho\Components\Databases\Providers;
 
-use Espricho\Components\Application\Application;
+use Espricho\Components\Application\System;
 use Espricho\Components\Providers\AbstractServiceProvider;
 use Espricho\Components\Databases\Listeners\ModelUpdatedListener;
 
@@ -18,7 +18,7 @@ class ModelUpdatedSubscriberProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(Application $app)
+    public function register(System $app)
     {
         em()->getEventManager()->addEventSubscriber(new ModelUpdatedListener);
     }

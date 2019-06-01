@@ -2,7 +2,7 @@
 
 namespace Espricho\Components\Http\Providers;
 
-use Espricho\Components\Application\Application;
+use Espricho\Components\Application\System;
 use Espricho\Components\Providers\AbstractServiceProvider;
 use Symfony\Component\HttpKernel\Controller\ControllerResolver;
 
@@ -16,7 +16,7 @@ class ControllerResolverProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(Application $app)
+    public function register(System $app)
     {
         $app->register(ControllerResolver::class, ControllerResolver::class);
     }

@@ -16,7 +16,7 @@ if (!function_exists('app')) {
      *
      * @param ParameterBagInterface|null $bag
      *
-     * @return \Espricho\Components\Application\Application
+     * @return \Espricho\Components\Application\System
      */
     function app(ParameterBagInterface $bag = null)
     {
