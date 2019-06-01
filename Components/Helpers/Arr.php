@@ -50,4 +50,32 @@ class Arr
              $del
         );
     }
+
+    /**
+     * Convert a flatten indexed array to a nested associative array. For example
+     * it converts `['my', 'name', 'is']` array to the
+     * ```
+     * [
+     *      'my' => [
+     *          'name' => [
+     *              'is' => null # or any given value as the parameter
+     *          ]
+     *      ]
+     * ]
+     * ```
+     *
+     * @param array      $arr
+     * @param null|mixed $value
+     * @param int        $from
+     *
+     * @return array
+     */
+    public static function deflat(array $arr, $value = null, int $from = 0): array
+    {
+        if ($from === count($arr) - 1) {
+            return [$arr[$from] => $value];
+        }
+
+        return [$arr[$from] => static::deflat($arr, $value, $from + 1)];
+    }
 }
