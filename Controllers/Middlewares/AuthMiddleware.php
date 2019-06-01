@@ -3,13 +3,14 @@
 namespace Espricho\Controllers\Middlewares;
 
 use Espricho\Components\Contracts\Middleware;
-use Espricho\Controllers\Middlewares\Exceptions\InvalidTokenException;
-use function ltrim;
-use function service;
-use function stripos;
-use function substr;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Espricho\Controllers\Middlewares\Exceptions\InvalidTokenException;
+
+use function ltrim;
+use function substr;
+use function service;
+use function stripos;
 
 /**
  * Class AuthMiddleware checks the current request is from an authenticated user
@@ -26,7 +27,6 @@ class AuthMiddleware implements Middleware
     public function handle(Request $request, callable $next): ?Response
     {
         if (
-
              ($token = $request->request->get('token', null)) !== null
              || ($token = $request->headers->get('Authorization', null)) !== null
         ) {

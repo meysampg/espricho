@@ -28,6 +28,7 @@ class HttpKernelProvider extends AbstractServiceProvider
          RouteDispatcherProvider::PROVIDE        => RouteDispatcherProvider::class,
          ArgumentResolver::class                 => ArgumentResolverProvider::class,
          ControllerResolver::class               => ControllerResolverProvider::class,
+         RequestJsonerListenerProvider::PROVIDE  => RequestJsonerListenerProvider::class,
          ResponseJsonerListenerProvider::PROVIDE => ResponseJsonerListenerProvider::class,
          Auth::class                             => AuthServiceProvider::class,
     ];
