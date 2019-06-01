@@ -3,10 +3,10 @@
 namespace Espricho\Components\Databases\Providers;
 
 use Doctrine\ORM\Tools\Setup;
-use Espricho\Components\Databases\EntityManager;
 use Espricho\Components\Application\System;
-use Espricho\Components\Configs\ConfigCollection;
+use Espricho\Components\Databases\EntityManager;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Espricho\Components\Contracts\ConfigManagerInterface;
 use Espricho\Components\Providers\AbstractServiceProvider;
 
 use function sprintf;
@@ -18,6 +18,10 @@ use function sprintf;
  */
 class EntityManagerProvider extends AbstractServiceProvider
 {
+    protected $dependencies = [
+         DatabaseEnvVariablesProvider::PROVIDE => DatabaseEnvVariablesProvider::class,
+    ];
+
     protected $suggestions = [
          ModelUpdatedSubscriberProvider::PROVIDE => ModelUpdatedSubscriberProvider::class,
     ];
@@ -25,25 +29,25 @@ class EntityManagerProvider extends AbstractServiceProvider
     /**
      * @inheritdoc
      */
-    public function register(System $app)
+    public function register(System $system)
     {
-        $dbParams = $this->getDBConfigurations($app->getConfigs());
-        $configs  = $this->getConfigs($app);
+        $dbParams = $this->getDBConfigurations($system->getConfigManager());
+        $configs  = $this->getConfigs($system);
 
-        $app->register(EntityManager::class)
-            ->setFactory([EntityManager::class, 'create'])
-            ->setArguments([$dbParams, $configs])
+        $system->register(EntityManager::class)
+               ->setFactory([EntityManager::class, 'create'])
+               ->setArguments([$dbParams, $configs])
         ;
     }
 
     /**
      * Get DB information from the DB configurations
      *
-     * @param ConfigCollection $configs
+     * @param ConfigManagerInterface $configs
      *
      * @return array
      */
-    private function getDBConfigurations(ConfigCollection $configs): array
+    private function getDBConfigurations(ConfigManagerInterface $configs): array
     {
         $db = [
              'driver'   => sprintf("pdo_%s", $configs->get('db.driver')),
