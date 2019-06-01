@@ -176,7 +176,7 @@ class System extends ContainerBuilder implements ApplicationInterface
      */
     public function getPath(string $path = ''): string
     {
-        return realpath(str_replace('/', DIRECTORY_SEPARATOR, __DIR__ . '/../../' . $path));
+        return $this->getProjectDir() . DIRECTORY_SEPARATOR . trim($path, '/\\' . DIRECTORY_SEPARATOR);
     }
 
     /**
