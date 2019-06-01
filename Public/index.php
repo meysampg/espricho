@@ -16,4 +16,4 @@ $bootstraper = new HttpBootstraper($root);
 /**
  * And GO ON!
  */
-return $bootstraper->getApp()->fire();
+return $bootstraper->getSystem()->fire();

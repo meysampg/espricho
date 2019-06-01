@@ -29,7 +29,7 @@ class RoutesProvider extends AbstractServiceProvider
              (new RoutesLoader(
                   __DIR__ . "{$ds}..{$ds}..{$ds}..{$ds}Configs",
                   'routes.yaml',
-                  $system->getConfigs()
+                  $system->getConfigManager()
              ))->load()
         );
     }

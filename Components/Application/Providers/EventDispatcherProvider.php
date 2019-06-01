@@ -5,6 +5,7 @@ namespace Espricho\Components\Application\Providers;
 use Espricho\Components\Application\System;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Espricho\Components\Providers\AbstractServiceProvider;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class EventDispatcherProvider provides EventDispatcher service
@@ -18,6 +19,6 @@ class EventDispatcherProvider extends AbstractServiceProvider
      */
     public function register(System $system)
     {
-        $system->register(EventDispatcher::class, EventDispatcher::class);
+        $system->register(EventDispatcherInterface::class, EventDispatcher::class);
     }
 }

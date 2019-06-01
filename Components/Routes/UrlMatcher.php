@@ -3,10 +3,10 @@
 namespace Espricho\Components\Routes;
 
 use Espricho\Components\Contracts\HttpKernelEvent;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Espricho\Components\Routes\Events\RouteResolvedEvent;
-use Symfony\Component\Routing\Matcher\RedirectableUrlMatcherInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\Matcher\UrlMatcher as BaseUrlMatcher;
+use Symfony\Component\Routing\Matcher\RedirectableUrlMatcherInterface;
 
 class UrlMatcher extends BaseUrlMatcher
 {
@@ -87,7 +87,7 @@ class UrlMatcher extends BaseUrlMatcher
                 continue;
             }
 
-            service(EventDispatcher::class)->dispatch(HttpKernelEvent::ROUTE_MATCHED, new RouteResolvedEvent($route));
+            service(EventDispatcherInterface::class)->dispatch(HttpKernelEvent::ROUTE_MATCHED, new RouteResolvedEvent($route));
 
             return $this->getAttributes($route, $name, array_replace($matches, $hostMatches, isset($status[1]) ? $status[1] : []));
         }

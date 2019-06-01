@@ -3,8 +3,8 @@
 namespace Espricho\Components\Routes\Providers;
 
 use Espricho\Components\Application\System;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Espricho\Components\Providers\AbstractServiceProvider;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Espricho\Components\Application\Providers\EventDispatcherProvider;
 use Espricho\Components\Routes\Subscribers\UrlMatchedMiddlewareSubscriber;
 
@@ -21,7 +21,7 @@ class UrlMatchedMiddlewareSubscribeProvider extends AbstractServiceProvider
     public const PROVIDE = 'url_matched_middleware_subscriber';
 
     protected $dependencies = [
-         EventDispatcher::class => EventDispatcherProvider::class,
+         EventDispatcherInterface::class => EventDispatcherProvider::class,
     ];
 
     /**
@@ -29,6 +29,6 @@ class UrlMatchedMiddlewareSubscribeProvider extends AbstractServiceProvider
      */
     public function register(System $system)
     {
-        service(EventDispatcher::class)->addSubscriber(new UrlMatchedMiddlewareSubscriber);
+        service(EventDispatcherInterface::class)->addSubscriber(new UrlMatchedMiddlewareSubscriber);
     }
 }

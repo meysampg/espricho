@@ -5,10 +5,11 @@ namespace Espricho\Components\Http\Providers;
 use Espricho\Components\Application\System;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Espricho\Components\Providers\AbstractServiceProvider;
 use Espricho\Components\Routes\Providers\UrlMatcherProvider;
 use Symfony\Component\HttpKernel\EventListener\RouterListener;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Espricho\Components\Application\Providers\EventDispatcherProvider;
 
 /**
  * Class RouteDispatcherProvider register RouterListener on application
@@ -20,8 +21,9 @@ class RouteDispatcherProvider extends AbstractServiceProvider
     public const PROVIDE = 'router_listener_register';
 
     protected $dependencies = [
-         UrlMatcher::class   => UrlMatcherProvider::class,
-         RequestStack::class => RequestStackProvider::class,
+         UrlMatcher::class               => UrlMatcherProvider::class,
+         RequestStack::class             => RequestStackProvider::class,
+         EventDispatcherInterface::class => EventDispatcherProvider::class,
     ];
 
     /**
@@ -29,13 +31,13 @@ class RouteDispatcherProvider extends AbstractServiceProvider
      */
     public function register(System $system)
     {
-        $system->get(EventDispatcher::class)
+        $system->get(EventDispatcherInterface::class)
                ->addSubscriber(
-                 new RouterListener(
-                      $system->get(UrlMatcher::class),
-                      $system->get(RequestStack::class)
-                 )
-            )
+                    new RouterListener(
+                         $system->get(UrlMatcher::class),
+                         $system->get(RequestStack::class)
+                    )
+               )
         ;
     }
 }

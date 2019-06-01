@@ -3,9 +3,9 @@
 namespace Espricho\Components\Http\Providers;
 
 use Espricho\Components\Application\System;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Espricho\Components\Providers\AbstractServiceProvider;
 use Espricho\Components\Http\Listeners\RequestJsonerListener;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Espricho\Components\Application\Providers\EventDispatcherProvider;
 
 /**
@@ -18,7 +18,7 @@ class RequestJsonerListenerProvider extends AbstractServiceProvider
     public const PROVIDE = 'request_jsoner_listener';
 
     protected $dependencies = [
-         EventDispatcher::class => EventDispatcherProvider::class,
+         EventDispatcherInterface::class => EventDispatcherProvider::class,
     ];
 
     /**
@@ -26,6 +26,6 @@ class RequestJsonerListenerProvider extends AbstractServiceProvider
      */
     public function register(System $system)
     {
-        $system->get(EventDispatcher::class)->addSubscriber(new RequestJsonerListener);
+        $system->get(EventDispatcherInterface::class)->addSubscriber(new RequestJsonerListener);
     }
 }
