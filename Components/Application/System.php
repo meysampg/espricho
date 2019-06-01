@@ -156,8 +156,12 @@ class System extends ContainerBuilder implements ApplicationInterface
      */
     public function setMiddleware(string $alias, $middleware): void
     {
-        if (!is_a($middleware, Middleware::class)) {
+        if (!is_a($middleware, Middleware::class, true)) {
             throw new InvalidMiddlewareClassException(sprintf("%s is not a valid middleware class. Make sure it implements %s.", $middleware, Middleware::class));
+        }
+
+        if (is_string($middleware)) {
+            $middleware = new $middleware;
         }
 
         $this->middlewares[$alias] = $middleware;

@@ -43,7 +43,6 @@ class UrlMatchedMiddlewareSubscriber implements EventSubscriberInterface
     {
         $route       = $event->getRoute();
         $middlewares = (array)$route->getDefault('middleware');
-        $toRun       = [];
 
         foreach ($middlewares as $middleware) {
             if (class_exists($middleware)) {
@@ -51,7 +50,7 @@ class UrlMatchedMiddlewareSubscriber implements EventSubscriberInterface
                     throw new InvalidMiddlewareClassException(sprintf("%s is not a valid middleware class. Make sure it implements %s.", $middleware, Middleware::class));
                 }
 
-                $toRun[] = (is_string($middleware) ? new $middleware : $middleware);
+                sys()->setMiddleware($middleware, $middleware);
 
                 continue;
             }
@@ -60,13 +59,7 @@ class UrlMatchedMiddlewareSubscriber implements EventSubscriberInterface
                 throw new InvalidMiddlewareClassException(sprintf("%s is not a valid middleware class.", $middleware, Middleware::class));
             }
 
-            $toRun[] = $middleware($middleware);
-        }
-
-        if (!empty($toRun)) {
-            // it's a route middleware and we don't have any response
-            Onion::run($toRun, app()->getParameter(RequestParameterProvider::PROVIDE));
-
+            sys()->setMiddleware($middleware, $middleware);
         }
     }
 }
