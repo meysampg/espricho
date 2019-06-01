@@ -1,9 +1,9 @@
 <?php
 
+use Psr\Log\LoggerInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use Espricho\Components\Contracts\Middleware;
 use Espricho\Components\Singletons\System;
-use Espricho\Components\Databases\EntityManager;
+use Espricho\Components\Contracts\Middleware;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
@@ -112,5 +112,32 @@ if (!function_exists('env')) {
         }
 
         return $default;
+    }
+}
+
+if (!function_exists('logger')) {
+    /**
+     * Send a given log to the logger service
+     *
+     * @param string $logType
+     * @param mixed $message
+     * @param mixed  $context
+     */
+    function logger(string $logType, $message, $context = [])
+    {
+        if (!sys()->has(LoggerInterface::class)) {
+            return;
+        }
+
+        if ($message instanceof Exception) {
+            $context = ['exception' => $message];
+            $message = '';
+        }
+
+        if ($context instanceof Exception) {
+            $context = ['exception' => $context];
+        }
+
+        service(LoggerInterface::class)->{$logType}($message, $context);
     }
 }

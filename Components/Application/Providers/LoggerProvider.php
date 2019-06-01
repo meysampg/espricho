@@ -4,13 +4,10 @@ namespace Espricho\Components\Application\Providers;
 
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
-use Monolog\Handler\StreamHandler;
+use Monolog\Formatter\LineFormatter;
+use Monolog\Handler\RotatingFileHandler;
 use Espricho\Components\Application\System;
-use Symfony\Component\DependencyInjection\Reference;
 use Espricho\Components\Providers\AbstractServiceProvider;
-
-use function sprintf;
-use function str_replace;
 
 /**
  * Class LoggerProvider register monolog as the logger
@@ -24,12 +21,19 @@ class LoggerProvider extends AbstractServiceProvider
      */
     public function register(System $system)
     {
-        $path = $system->getPath('Runtime/Logs/espricho.log');
-        $system->register(StreamHandler::class, StreamHandler::class)
-               ->setArguments([$path, Logger::DEBUG])
-        ;
+        $path    = $system->getPath('Runtime/Logs/espricho.log');
+        $handler = new RotatingFileHandler($path, $system->getConfig('sys.max_log_files', 10), Logger::DEBUG);
+
+        $format    = "[%datetime%] %channel%.%level_name%: %message%\n%context%\n%extra%\n\n";
+        $formatter = new LineFormatter($format);
+        $formatter->includeStacktraces();
+        $formatter->ignoreEmptyContextAndExtra();
+
+        $handler->setFormatter($formatter);
+
         $system->register(LoggerInterface::class, Logger::class)
-            //->setArguments(['Espricho', [new Reference(StreamHandler::class)]])
+               ->setArguments(['Espricho', [$handler]])
+               ->setPublic(true)
         ;
     }
 }
