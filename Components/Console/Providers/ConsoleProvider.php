@@ -21,11 +21,11 @@ class ConsoleProvider extends AbstractServiceProvider
     {
         $system->register(KernelInterface::class, Console::class)
                ->setArguments(
-                 [
-                      $system->getConfig('app.name', 'Espricho'),
-                      $system->getConfig('app.version', '0.1'),
-                 ]
-            )
+                    [
+                         $system->getConfig('app.name', 'Espricho'),
+                         $system->getConfig('app.version', '0.1'),
+                    ]
+               )
         ;
     }
 }

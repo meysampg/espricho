@@ -96,7 +96,7 @@ class EntityManagerProvider extends AbstractServiceProvider
     {
         return Setup::createAnnotationMetadataConfiguration(
              $system->getConfig('db.orm.entity_paths'),
-             $system->getConfig('app.debug'),
+             $system->isDevMode(),
              null,
              null,
              false
