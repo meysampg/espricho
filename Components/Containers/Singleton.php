@@ -35,13 +35,13 @@ class Singleton
     }
 
     /**
-     * A shorthand to the getInstance method
+     * Set the instance
      *
-     * @return object
+     * @param $instance
      */
-    public static function i(): object
+    public static function setInstance($instance): void
     {
-        return static::getInstance(...func_get_args());
+        static::$instance[static::$class] = $instance;
     }
 
     /**
