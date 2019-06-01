@@ -1,7 +1,8 @@
 <?php
 
+use Doctrine\ORM\EntityManagerInterface;
 use Espricho\Components\Contracts\Middleware;
-use Espricho\Components\Singletons\Application;
+use Espricho\Components\Singletons\System;
 use Espricho\Components\Databases\EntityManager;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
@@ -10,17 +11,17 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
  * defined function
  */
 
-if (!function_exists('app')) {
+if (!function_exists('sys')) {
     /**
-     * Return an instance of application
+     * Return an instance of system
      *
      * @param ParameterBagInterface|null $bag
      *
      * @return \Espricho\Components\Application\System
      */
-    function app(ParameterBagInterface $bag = null)
+    function sys(ParameterBagInterface $bag = null)
     {
-        return Application::getInstance($bag);
+        return System::getInstance($bag);
     }
 }
 
@@ -34,7 +35,7 @@ if (!function_exists('service')) {
      */
     function service(string $key)
     {
-        return app()->get($key);
+        return sys()->get($key);
     }
 }
 
@@ -48,7 +49,7 @@ if (!function_exists('middleware')) {
      */
     function middleware(string $key): ?Middleware
     {
-        return app()->getMiddleware($key);
+        return sys()->getMiddleware($key);
     }
 }
 
@@ -61,7 +62,7 @@ if (!function_exists('em')) {
      */
     function em()
     {
-        return app()->get(EntityManager::class);
+        return sys()->get(EntityManagerInterface::class);
     }
 }
 

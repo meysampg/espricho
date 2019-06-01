@@ -1,4 +1,4 @@
-app:
+sys:
   name: Espricho
   version: 0.1
   loader: # make sure there are some files with this name on the configs folder

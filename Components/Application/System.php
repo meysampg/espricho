@@ -15,6 +15,7 @@ use Espricho\Components\Http\Exceptions\InvalidMiddlewareClassException;
 
 use function is_a;
 use function sprintf;
+use function in_array;
 use function realpath;
 use function is_string;
 use function str_replace;
@@ -23,7 +24,7 @@ use function str_replace;
  * Class System provides the operation system functionality. It provides the
  * communication between the event manager, config manager and the kernel.
  *
- * @package Espricho\Components\Application
+ * @package Espricho\Components\System
  */
 class System extends ContainerBuilder implements ApplicationInterface
 {
@@ -243,5 +244,15 @@ class System extends ContainerBuilder implements ApplicationInterface
     public function getConfig(string $key, $default = null)
     {
         return $this->getConfigManager()->get($key, $default);
+    }
+
+    /**
+     * Indicate application is in development mode or not
+     *
+     * @return bool
+     */
+    public function isDevMode(): bool
+    {
+        return in_array($this->getConfig('sys.env'), ['test', 'dev', 'local']);
     }
 }

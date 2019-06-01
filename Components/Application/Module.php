@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Class Module provides the module functionality
  *
- * @package Espricho\Components\Application
+ * @package Espricho\Components\System
  */
 class Module implements ModuleInterface
 {

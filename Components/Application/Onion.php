@@ -12,7 +12,7 @@ use function is_null;
 /**
  * Class Onion provides a middleware running functionality
  *
- * @package Espricho\Components\Application
+ * @package Espricho\Components\System
  */
 class Onion implements Middleware
 {

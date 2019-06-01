@@ -5,21 +5,21 @@ namespace Espricho\Components\Application;
 use Exception;
 use Symfony\Component\Debug\Debug;
 use Espricho\Components\Singletons\EnvLoader;
-use Espricho\Components\Configs\ConfigCollection;
+use Espricho\Components\Configs\ConfigurationsLoader;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Espricho\Components\Singletons\System as SingletonSystem;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 use Espricho\Components\Application\Exceptions\NotEnvFileExistsException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 use function rtrim;
 use function sprintf;
-use function realpath;
 use function in_array;
 
 /**
  * Class Bootstraper starter of the system
  *
- * @package Espricho\Components\Application
+ * @package Espricho\Components\System
  */
 abstract class Bootstraper
 {
@@ -31,6 +31,13 @@ abstract class Bootstraper
     protected $system;
 
     /**
+     * Root path of the project
+     *
+     * @var string
+     */
+    protected $rootPath;
+
+    /**
      * Indicate system is booted or not
      *
      * @var bool
@@ -40,13 +47,15 @@ abstract class Bootstraper
     /**
      * Bootstraper constructor.
      *
-     * @param string $envPath
+     * @param string $rootPath
      *
      * @throws NotEnvFileExistsException
      */
-    public function __construct(string $envPath)
+    public function __construct(string $rootPath)
     {
-        $envPath = realpath(rtrim($envPath, DIRECTORY_SEPARATOR . "/") . DIRECTORY_SEPARATOR . ".env");
+        $this->rootPath = $rootPath;
+
+        $envPath = rtrim($rootPath, DIRECTORY_SEPARATOR . "/") . DIRECTORY_SEPARATOR . ".env";
 
         try {
             EnvLoader::getInstance()->loadEnv($envPath, 'ENV');
@@ -75,6 +84,26 @@ abstract class Bootstraper
     public function setSystem(System $system): void
     {
         $this->system = $system;
+    }
+
+    /**
+     * Get the root directory path
+     *
+     * @return string
+     */
+    public function getRootPath(): string
+    {
+        return $this->rootPath;
+    }
+
+    /**
+     * Set the root directory path
+     *
+     * @param string $rootPath
+     */
+    public function setRootPath(string $rootPath): void
+    {
+        $this->rootPath = $rootPath;
     }
 
     /**
@@ -153,6 +182,7 @@ abstract class Bootstraper
         $bag = $this->makeParameterBag();
 
         $this->setSystem(new System($bag));
+        SingletonSystem::setInstance($this->getSystem());
     }
 
     /**
@@ -180,7 +210,8 @@ abstract class Bootstraper
      */
     protected function initializeConfigManager()
     {
-        $this->getSystem()->setConfigManager(new ConfigCollection());
+        $loader = new ConfigurationsLoader($this->getRootPath() . DIRECTORY_SEPARATOR . "Configs", ['sys.yaml']);
+        $this->getSystem()->setConfigManager($loader->load());
     }
 
     /**
@@ -226,7 +257,7 @@ abstract class Bootstraper
      */
     protected function lookForCompiled()
     {
-
+        // TODO: load system from cache
     }
 
     /**
@@ -234,6 +265,9 @@ abstract class Bootstraper
      */
     protected function compile()
     {
+        // TODO: cache compiled system based on configuration checking
+        $this->getSystem()->compile();
+
         $this->makeBooted();
     }
 }
