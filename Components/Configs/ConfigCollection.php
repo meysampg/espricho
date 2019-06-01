@@ -8,18 +8,20 @@ use IteratorAggregate;
 use Espricho\Components\Helpers\Arr;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Config\Resource\ResourceInterface;
+use Espricho\Components\Contracts\ConfigManagerInterface;
 
 use function count;
 use function current;
 use function explode;
 use function is_array;
+use function strtolower;
 
 /**
  * Class ConfigCollection provides functions to working with configurations
  *
  * @package Espricho\Components\Configs
  */
-class ConfigCollection implements IteratorAggregate, Countable
+class ConfigCollection implements IteratorAggregate, Countable, ConfigManagerInterface
 {
     /**
      * Array of resources
@@ -31,7 +33,7 @@ class ConfigCollection implements IteratorAggregate, Countable
     /**
      * Array of configurations
      *
-     * @var array
+     * @var Configuration[]
      */
     protected $configs = [];
 

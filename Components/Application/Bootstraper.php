@@ -5,6 +5,8 @@ namespace Espricho\Components\Application;
 use Exception;
 use Symfony\Component\Debug\Debug;
 use Espricho\Components\Singletons\EnvLoader;
+use Espricho\Components\Configs\ConfigCollection;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 use Espricho\Components\Application\Exceptions\NotEnvFileExistsException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -101,16 +103,20 @@ abstract class Bootstraper
      */
     protected function startBoot()
     {
+        $this->debuggerInitialize();
+        $this->lookForCompiled();
+
         if ($this->isBooted()) {
             return;
         }
 
-        $this->debuggerInitialize();
         $this->runSystemProcess();
+        $this->initializeConfigManager();
+        $this->initializeEventManager();
         $this->registerExtensions();
         $this->registerServices();
 
-        $this->makeBooted();
+        $this->compile();
     }
 
     /**
@@ -170,6 +176,22 @@ abstract class Bootstraper
     }
 
     /**
+     * Initialize the config manager
+     */
+    protected function initializeConfigManager()
+    {
+        $this->getSystem()->setConfigManager(new ConfigCollection());
+    }
+
+    /**
+     * Initialize the event manager
+     */
+    protected function initializeEventManager()
+    {
+        $this->getSystem()->setEventManager(new EventDispatcher());
+    }
+
+    /**
      * Register extensions
      */
     protected function registerExtensions()
@@ -197,5 +219,21 @@ abstract class Bootstraper
         if (in_array(env('app_env'), ['dev', 'debug', 'test'])) {
             Debug::enable();
         }
+    }
+
+    /**
+     * Look for a compiled version of system
+     */
+    protected function lookForCompiled()
+    {
+
+    }
+
+    /**
+     * Compile and save the prepared system for future usage
+     */
+    protected function compile()
+    {
+        $this->makeBooted();
     }
 }

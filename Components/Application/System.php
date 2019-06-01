@@ -231,4 +231,17 @@ class System extends ContainerBuilder implements ApplicationInterface
     {
         $this->set(KernelInterface::class, $kernel);
     }
+
+    /**
+     * Return a requested config
+     *
+     * @param string $key
+     * @param mixed  $default
+     *
+     * @return mixed
+     */
+    public function getConfig(string $key, $default = null)
+    {
+        return $this->getConfigManager()->get($key, $default);
+    }
 }
