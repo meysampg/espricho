@@ -38,6 +38,7 @@ class EntityManagerProvider extends AbstractServiceProvider
         $system->register(EntityManagerInterface::class)
                ->setFactory([EntityManager::class, 'create'])
                ->setArguments([$dbParams, $configs])
+               ->setPublic(true)
         ;
     }
 
