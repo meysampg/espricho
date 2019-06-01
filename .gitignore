@@ -6,3 +6,7 @@
 
 # Environmental files
 .env
+
+# Runtime folders
+Runtime/Cache
+Runtime/Logs
