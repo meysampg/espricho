@@ -13,7 +13,7 @@ class StatisticsCacheLoggerProvider extends AbstractServiceProvider
      */
     public function register(System $system)
     {
-        $system->register(o, StatisticsCacheLogger::class)
+        $system->register(StatisticsCacheLogger::class, StatisticsCacheLogger::class)
                ->setPublic(true)
         ;
     }
