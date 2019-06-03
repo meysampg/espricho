@@ -4,6 +4,7 @@ namespace Espricho\Components\Databases\Providers;
 
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Cache\CacheConfiguration;
 use Espricho\Components\Application\System;
 use Espricho\Components\Databases\EntityManager;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,6 +27,7 @@ class EntityManagerProvider extends AbstractServiceProvider
          DatabaseEnvVariablesProvider::PROVIDE => DatabaseEnvVariablesProvider::class,
          ValidatorInterface::class             => ValidatorProvider::class,
          DoctrineCacheInterface::class         => DoctrineCacheProvider::class,
+         CacheConfiguration::class             => DoctrineCacheConfigurationProvider::class,
     ];
 
     protected $suggestions = [
@@ -102,12 +104,17 @@ class EntityManagerProvider extends AbstractServiceProvider
      */
     private function getConfigs(System $system)
     {
-        return Setup::createAnnotationMetadataConfiguration(
+        $configurations = Setup::createAnnotationMetadataConfiguration(
              $system->getConfig('db.orm.entity_paths'),
              $system->isDevMode(),
              $system->getPath('Runtime/Cache/Proxies'),
              $system->get(DoctrineCacheInterface::class),
              false
         );
+
+        $configurations->setSecondLevelCacheEnabled(true);
+        $configurations->setSecondLevelCacheConfiguration($system->get(CacheConfiguration::class));
+
+        return $configurations;
     }
 }

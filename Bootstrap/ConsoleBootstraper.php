@@ -9,6 +9,7 @@ use Espricho\Components\Databases\Providers\OrmCommandProvider;
 use Espricho\Components\Databases\Providers\OrmProxyCommandProvider;
 use Espricho\Components\Databases\Providers\OrmCacheCommandProvider;
 use Espricho\Components\Databases\Providers\MigrationCommandProvider;
+use Espricho\Components\Databases\Providers\CacheStatisticsCommandProvider;
 
 /**
  * Class ConsoleBootstraper provides console bootstraper
@@ -27,6 +28,7 @@ class ConsoleBootstraper extends Bootstraper
              OrmProxyCommandProvider::class,
              OrmCacheCommandProvider::class,
              MigrationCommandProvider::class,
+             CacheStatisticsCommandProvider::class,
         ];
     }
 

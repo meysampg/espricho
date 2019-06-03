@@ -20,6 +20,8 @@ class DoctrineCacheProvider extends AbstractServiceProvider
      */
     public function register(System $system)
     {
-        $system->setAlias(DoctrineCacheInterface::class, RedisCache::class);
+        $system->setAlias(DoctrineCacheInterface::class, RedisCache::class)
+               ->setPublic(true)
+        ;
     }
 }
