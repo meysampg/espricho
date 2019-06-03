@@ -4,7 +4,7 @@
  */
 $ds   = DIRECTORY_SEPARATOR;
 $root = __DIR__ . "{$ds}..";
-require_once "{$root}{$ds}vendor{$ds}autoload.php";
+require_once "{$root}{$ds}Bootstrap{$ds}autoload.php";
 
 use Espricho\Bootstrap\HttpBootstraper;
 

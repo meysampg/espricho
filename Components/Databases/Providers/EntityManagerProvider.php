@@ -10,6 +10,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Espricho\Components\Contracts\DoctrineCacheInterface;
 use Espricho\Components\Contracts\ConfigManagerInterface;
 use Espricho\Components\Providers\AbstractServiceProvider;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Espricho\Components\Validations\Providers\ValidatorProvider;
 
 use function sprintf;
 
@@ -22,6 +24,7 @@ class EntityManagerProvider extends AbstractServiceProvider
 {
     protected $dependencies = [
          DatabaseEnvVariablesProvider::PROVIDE => DatabaseEnvVariablesProvider::class,
+         ValidatorInterface::class             => ValidatorProvider::class,
          DoctrineCacheInterface::class         => DoctrineCacheProvider::class,
     ];
 
