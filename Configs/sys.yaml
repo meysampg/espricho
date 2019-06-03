@@ -6,3 +6,4 @@ sys:
   - auth # for example the configs of auth must be under the auth section
   - db
   - modules
+  - redis

@@ -120,7 +120,7 @@ if (!function_exists('logger')) {
      * Send a given log to the logger service
      *
      * @param string $logType
-     * @param mixed $message
+     * @param mixed  $message
      * @param mixed  $context
      */
     function logger(string $logType, $message, $context = [])

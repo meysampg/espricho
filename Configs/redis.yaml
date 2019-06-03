@@ -1,0 +1,7 @@
+redis:
+  compression: true
+  lazy: false
+  read_timeout: 0
+  retry_interval: 0
+  tcp_keepalive: 0
+  timeout: 30

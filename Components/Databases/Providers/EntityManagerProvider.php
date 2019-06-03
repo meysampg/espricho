@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Espricho\Components\Application\System;
 use Espricho\Components\Databases\EntityManager;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Espricho\Components\Contracts\DoctrineCacheInterface;
 use Espricho\Components\Contracts\ConfigManagerInterface;
 use Espricho\Components\Providers\AbstractServiceProvider;
 
@@ -21,6 +22,7 @@ class EntityManagerProvider extends AbstractServiceProvider
 {
     protected $dependencies = [
          DatabaseEnvVariablesProvider::PROVIDE => DatabaseEnvVariablesProvider::class,
+         DoctrineCacheInterface::class         => DoctrineCacheProvider::class,
     ];
 
     protected $suggestions = [
@@ -93,6 +95,7 @@ class EntityManagerProvider extends AbstractServiceProvider
      * @param System $system
      *
      * @return \Doctrine\ORM\Configuration
+     * @throws \Exception
      */
     private function getConfigs(System $system)
     {
@@ -100,7 +103,7 @@ class EntityManagerProvider extends AbstractServiceProvider
              $system->getConfig('db.orm.entity_paths'),
              $system->isDevMode(),
              null,
-             null,
+             $system->get(DoctrineCacheInterface::class),
              false
         );
     }

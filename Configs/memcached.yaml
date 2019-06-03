@@ -1,0 +1,25 @@
+memcached:
+  auto_eject_hosts: false
+  buffer_writes: false
+  compression: false
+  compression_type: zlib
+  connect_timeout: 1000
+  distribution: consistent
+  hash: md5
+  libketama_compatible: true
+  no_block: true
+  number_of_replicas: 0
+  prefix_key: ''
+  poll_timeout: 1000
+  randomize_replica_read: false
+  recv_timeout: 0
+  retry_timeout: 0
+  send_timeout: 0
+  serializer: php
+  server_failure_limit: 0
+  socket_recv_size: 0
+  socket_send_size: 0
+  tcp_keepalive: false
+  tcp_nodelay: false
+  use_udp: false
+  verify_key: false
