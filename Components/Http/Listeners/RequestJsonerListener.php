@@ -36,6 +36,10 @@ class RequestJsonerListener implements EventSubscriberInterface
         $request = $event->getRequest();
         if (0 === stripos($request->headers->get('content-type'), 'application/json')) {
             $content = $request->getContent();
+            if (!$content) {
+                return;
+            }
+
             $content = json_decode($content, true);
             $request->request->replace($content);
 
