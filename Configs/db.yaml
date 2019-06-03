@@ -2,3 +2,5 @@ db:
   orm:
     entity_paths:
       - Models
+    repository_paths:
+      - Repositories

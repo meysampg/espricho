@@ -102,7 +102,7 @@ class EntityManagerProvider extends AbstractServiceProvider
         return Setup::createAnnotationMetadataConfiguration(
              $system->getConfig('db.orm.entity_paths'),
              $system->isDevMode(),
-             null,
+             $system->getPath('Runtime/Cache/Proxies'),
              $system->get(DoctrineCacheInterface::class),
              false
         );
