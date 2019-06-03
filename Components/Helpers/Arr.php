@@ -3,7 +3,9 @@
 namespace Espricho\Components\Helpers;
 
 use function implode;
+use function array_keys;
 use function array_slice;
+use function array_filter;
 
 /**
  * Class Arr provides some static methods to working with array
@@ -77,5 +79,29 @@ class Arr
         }
 
         return [$arr[$from] => static::deflat($arr, $value, $from + 1)];
+    }
+
+    /**
+     * Check a given array is associative or not
+     *
+     * @param array $arr
+     *
+     * @return bool
+     */
+    public static function isNonAssociative(array $arr): bool
+    {
+        return count($arr) === count(array_filter(array_keys($arr), 'is_numeric'));
+    }
+
+    /**
+     * Check a given array is associative or not
+     *
+     * @param array $arr
+     *
+     * @return bool
+     */
+    public static function isAssociative(array $arr): bool
+    {
+        return !static::isNonAssociative($arr);
     }
 }
