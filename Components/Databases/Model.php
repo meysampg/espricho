@@ -9,9 +9,10 @@ use Espricho\Components\Supports\Carbon;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
+use function count;
+use function sprintf;
 use function in_array;
 use function method_exists;
-use function property_exists;
 
 /**
  * Class Model provides common a data mapper model functionality
@@ -20,6 +21,24 @@ use function property_exists;
  */
 abstract class Model implements JsonSerializable
 {
+    /**
+     * @var DateTimeInterface
+     * @ORM\Column(name="created_at", type="datetime")
+     */
+    protected $createdAt;
+
+    /**
+     * @var DateTimeInterface
+     * @ORM\Column(name="updated_at", type="datetime")
+     */
+    protected $updatedAt;
+
+    /**
+     * @var DateTimeInterface
+     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
+     */
+    protected $deletedAt;
+
     /**
      * List of properties which can be mass assign with the load method
      *
@@ -33,6 +52,21 @@ abstract class Model implements JsonSerializable
      * @var array
      */
     protected $errors = [];
+
+    /**
+     * Call a model clean, if it's not mass loaded
+     *
+     * @var bool
+     */
+    protected $isClean = true;
+
+    /**
+     * @inheritDoc
+     */
+    public function __toString()
+    {
+        return sprintf("%s#%s", static::class, $this->getId());
+    }
 
     /**
      * Return business validation errors
@@ -57,6 +91,26 @@ abstract class Model implements JsonSerializable
     }
 
     /**
+     * Check the model has validation error or not
+     *
+     * @return bool
+     */
+    public function hasErrors(): bool
+    {
+        return count($this->errors) != 0;
+    }
+
+    /**
+     * Indicate model is mass loaded or not
+     *
+     * @return bool
+     */
+    public function isDirty(): bool
+    {
+        return !$this->isClean;
+    }
+
+    /**
      * Validate the model based on the values stored on it and its business rules
      *
      * @return bool
@@ -66,76 +120,100 @@ abstract class Model implements JsonSerializable
         $errors = service(ValidatorInterface::class)->validate($this);
         $this->setErrors($errors);
 
-        return count($errors) == 0;
+        return !$this->hasErrors();
     }
 
     /**
      * Load a given set of data into the model
      *
      * @param array $data
+     *
+     * @return bool
      */
-    public function load(array $data)
+    public function load(array $data): bool
     {
+        $done = false;
+
         foreach ($data as $property => $value) {
             if (
                  !in_array($property, (array)$this->fillable)
-                 || !property_exists($this, $property)
                  || !method_exists($this, 'set' . $property)
             ) {
                 continue;
             }
 
             $this->{'set' . $property}($value);
+            $done = true;
         }
+
+        $this->isClean = !$done;
+
+        return $done;
     }
 
     /**
-     * @var DateTimeInterface
-     * @ORM\Column(name="created_at", type="datetime")
+     * createdAt getter
+     *
+     * @return Carbon
      */
-    protected $createdAt;
-
-    /**
-     * @var DateTimeInterface
-     * @ORM\Column(name="updated_at", type="datetime")
-     */
-    protected $updatedAt;
-
-    /**
-     * @var DateTimeInterface
-     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
-     */
-    protected $deletedAt;
-
     public function getCreatedAt(): Carbon
     {
         return Carbon::instance($this->createdAt);
     }
 
+    /**
+     * createdAt setter
+     *
+     * @param DateTimeInterface $dt
+     */
     public function setCreatedAt(DateTimeInterface $dt)
     {
         $this->createdAt = $dt;
     }
 
+    /**
+     * updatedAt getter
+     *
+     * @return Carbon
+     */
     public function getUpdatedAt(): Carbon
     {
         return Carbon::instance($this->updatedAt);
     }
 
+    /**
+     * updatedAt setter
+     *
+     * @param DateTimeInterface $dt
+     */
     public function setUpdatedAt(DateTimeInterface $dt)
     {
         $this->updatedAt = $dt;
     }
 
+    /**
+     * deletedAt setter
+     *
+     * @return Carbon
+     */
     public function getDeletedAt(): Carbon
     {
         return Carbon::instance($this->deletedAt);
     }
 
-    public function setDeletedAt(DateTimeInterface $dt)
+    /**
+     * deletedAt setter. For safe delete fill it with a value and to undelete
+     * fill it with null value.
+     *
+     * @param DateTimeInterface|null $dt
+     */
+    public function setDeletedAt(?DateTimeInterface $dt)
     {
         $this->deletedAt = $dt;
     }
 
+    /**
+     * @inheritDoc
+     */
     abstract public function jsonSerialize(): array;
 }
