@@ -27,12 +27,11 @@ class HttpKernel extends BaseHttpKernel implements HttpKernelInterface
              ->dispatch(HttpKernelEvent::BEFORE_FIRE, new BeforeHttpKernelFireEvent($request))
         ;
 
-        $response = $this->handle($request);
         $response = Onion::run(
              sys()->getMiddlewares(),
              $request,
-             function (Request $request) use ($response) {
-                 return $response->send();
+             function (Request $request) {
+                 return $this->handle($request)->send();
              }
         );
 
