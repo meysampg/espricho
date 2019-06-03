@@ -3,6 +3,7 @@
 namespace Espricho\Components\Http\Providers;
 
 use Espricho\Components\Application\System;
+use Espricho\Components\Http\ContainerResolver;
 use Espricho\Components\Providers\AbstractServiceProvider;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
 
@@ -18,6 +19,20 @@ class ArgumentResolverProvider extends AbstractServiceProvider
      */
     public function register(System $system)
     {
-        $system->register(ArgumentResolver::class, ArgumentResolver::class);
+        $system->register(ArgumentResolver::class, ArgumentResolver::class)
+               ->setArguments(
+                    [
+                         null,
+                         [
+                              new ArgumentResolver\RequestAttributeValueResolver(),
+                              new ArgumentResolver\RequestValueResolver(),
+                              new ArgumentResolver\SessionValueResolver(),
+                              new ArgumentResolver\DefaultValueResolver(),
+                              new ArgumentResolver\VariadicValueResolver(),
+                              new ContainerResolver(),
+                         ],
+                    ]
+               )
+        ;
     }
 }
