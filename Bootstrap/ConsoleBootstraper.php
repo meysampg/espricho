@@ -4,6 +4,7 @@ namespace Espricho\Bootstrap;
 
 use Espricho\Components\Application\Bootstraper;
 use Espricho\Components\Console\Providers\ConsoleProvider;
+use Espricho\Components\Auth\Providers\AuthCommandsProvider;
 use Espricho\Components\Console\Providers\HelperSetProvider;
 use Espricho\Components\Databases\Providers\OrmCommandProvider;
 use Espricho\Components\Databases\Providers\OrmProxyCommandProvider;
@@ -26,6 +27,7 @@ class ConsoleBootstraper extends Bootstraper
              ConsoleProvider::class,
              HelperSetProvider::class,
              OrmCommandProvider::class,
+             AuthCommandsProvider::class,
              ElasticCommandsProvider::class,
              OrmProxyCommandProvider::class,
              OrmCacheCommandProvider::class,
