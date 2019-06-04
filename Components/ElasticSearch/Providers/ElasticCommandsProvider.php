@@ -4,9 +4,8 @@ namespace Espricho\Components\ElasticSearch\Providers;
 
 use Espricho\Components\Application\System;
 use Espricho\Components\Contracts\KernelInterface;
-use Espricho\Components\Contracts\HttpClientInterface;
+use Espricho\Components\Contracts\SearchEngineInterface;
 use Espricho\Components\Providers\AbstractServiceProvider;
-use Espricho\Components\HttpClient\Providers\HttpClientProvider;
 use Espricho\Components\ElasticSearch\Commands\ESInformationCommand;
 
 /**
@@ -17,8 +16,7 @@ use Espricho\Components\ElasticSearch\Commands\ESInformationCommand;
 class ElasticCommandsProvider extends AbstractServiceProvider
 {
     protected $dependencies = [
-         HttpClientInterface::class     => HttpClientProvider::class,
-         ESEnvToConfigProvider::PROVIDE => ESEnvToConfigProvider::class,
+         SearchEngineInterface::class => ElasticSearchProvider::class,
     ];
 
     /**

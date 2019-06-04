@@ -2,12 +2,16 @@
 
 namespace Espricho\Components\ElasticSearch\Providers;
 
-use Elasticsearch\Client;
+use Psr\Log\LoggerInterface;
+use Elasticsearch\ClientBuilder;
+use Espricho\Components\Helpers\Str;
 use Espricho\Components\Application\System;
-use Espricho\Components\Contracts\HttpClientInterface;
+use Symfony\Component\DependencyInjection\Reference;
 use Espricho\Components\Contracts\SearchEngineInterface;
 use Espricho\Components\Providers\AbstractServiceProvider;
-use Espricho\Components\HttpClient\Providers\HttpClientProvider;
+use Espricho\Components\Application\Providers\LoggerProvider;
+
+use function sys;
 
 /**
  * Class ElasticSearchProvider provides elastic search service
@@ -17,8 +21,8 @@ use Espricho\Components\HttpClient\Providers\HttpClientProvider;
 class ElasticSearchProvider extends AbstractServiceProvider
 {
     protected $dependencies = [
-         HttpClientInterface::class     => HttpClientProvider::class,
          ESEnvToConfigProvider::PROVIDE => ESEnvToConfigProvider::class,
+         LoggerInterface::class         => LoggerProvider::class,
     ];
 
     /**
@@ -26,6 +30,17 @@ class ElasticSearchProvider extends AbstractServiceProvider
      */
     public function register(System $system)
     {
-        $system->register(SearchEngineInterface::class, Client::class);
+        $servers = Str::split(sys()->getConfig('elasticsearch.servers', ''));
+
+        $system->register(ClientBuilder::class)
+               ->setFactory([ClientBuilder::class, 'create'])
+               ->addMethodCall('setHosts', [$servers])
+               ->addMethodCall('setLogger', [new Reference(LoggerInterface::class)])
+        ;
+
+        $system->register(SearchEngineInterface::class)
+               ->setFactory([new Reference(ClientBuilder::class), 'build'])
+               ->setPublic(true)
+        ;
     }
 }
