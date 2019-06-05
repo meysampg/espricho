@@ -17,7 +17,8 @@ use function json_decode;
 
 /**
  * Class CreateESMappingCommand generate mappings based on the configurations. For
- * using this command
+ * using this command please put the mapping under the mappings section of the
+ * elasticsearch configurations files.
  *
  * @package Espricho\Components\ElasticSearch\Commands
  */
