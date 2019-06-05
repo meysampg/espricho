@@ -6,6 +6,8 @@ use Psr\Log\LoggerInterface;
 use Elasticsearch\ClientBuilder;
 use Espricho\Components\Helpers\Str;
 use Espricho\Components\Application\System;
+use Espricho\Components\ElasticSearch\Searcher;
+use Espricho\Components\Contracts\SearchInterface;
 use Symfony\Component\DependencyInjection\Reference;
 use Espricho\Components\Contracts\SearchEngineInterface;
 use Espricho\Components\Providers\AbstractServiceProvider;
@@ -40,6 +42,11 @@ class ElasticSearchProvider extends AbstractServiceProvider
 
         $system->register(SearchEngineInterface::class)
                ->setFactory([new Reference(ClientBuilder::class), 'build'])
+               ->setPublic(true)
+        ;
+
+        $system->register(SearchInterface::class, Searcher::class)
+               ->setArguments([new Reference(SearchEngineInterface::class)])
                ->setPublic(true)
         ;
     }

@@ -12,11 +12,11 @@ interface SearchInterface
     /**
      * Return an array as results of looking for a Searchable entity
      *
-     * @param SearchableInterface $searchable
+     * @param SearchConditionInterface $searchable
      *
      * @return array
      */
-    public function searchFor(SearchableInterface $searchable): array;
+    public function searchFor(SearchConditionInterface $searchable): array;
 
     /**
      * Update an index for new version of a Searchable entity
