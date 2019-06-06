@@ -80,6 +80,7 @@ class Searcher implements SearchInterface
      */
     public function updateIndexFor(SearchableInterface $searchable): bool
     {
+        // TODO: implement a firm update method
         return $this->createIndexFor($searchable);
     }
 
