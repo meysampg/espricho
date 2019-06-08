@@ -87,7 +87,7 @@ class UrlMatcher extends BaseUrlMatcher
                 continue;
             }
 
-            service(EventDispatcherInterface::class)->dispatch(HttpKernelEvent::ROUTE_MATCHED, new RouteResolvedEvent($route));
+            service(EventDispatcherInterface::class)->dispatch(HttpKernelEvent::ROUTE_MATCHED, new RouteResolvedEvent($route, $this->request));
 
             return $this->getAttributes($route, $name, array_replace($matches, $hostMatches, isset($status[1]) ? $status[1] : []));
         }

@@ -6,6 +6,7 @@ use Espricho\Components\Contracts\Middleware;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Espricho\Controllers\Middlewares\Exceptions\InvalidTokenException;
+use Espricho\Controllers\Middlewares\Exceptions\UnauthorizedActionException;
 
 use function ltrim;
 use function substr;
@@ -23,6 +24,7 @@ class AuthMiddleware implements Middleware
     /**
      * @inheritdoc
      * @throws InvalidTokenException
+     * @throws UnauthorizedActionException
      */
     public function handle(Request $request, callable $next): ?Response
     {
@@ -38,7 +40,7 @@ class AuthMiddleware implements Middleware
                 throw new InvalidTokenException("Given token is invalid.");
             }
         } else {
-            throw new InvalidTokenException("The request is unauthorized.");
+            throw new UnauthorizedActionException("The request is unauthorized.");
         }
 
         sys()->setUser(service('auth')->getUser($token));

@@ -7,11 +7,10 @@ use Espricho\Components\Contracts\Middleware;
 use Espricho\Components\Contracts\HttpKernelEvent;
 use Espricho\Components\Routes\Events\RouteResolvedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Espricho\Components\Http\Providers\RequestParameterProvider;
 use Espricho\Components\Http\Exceptions\InvalidMiddlewareClassException;
 
 use function sprintf;
-use function is_string;
+use function is_object;
 use function class_exists;
 use function is_subclass_of;
 
@@ -43,6 +42,7 @@ class UrlMatchedMiddlewareSubscriber implements EventSubscriberInterface
     {
         $route       = $event->getRoute();
         $middlewares = (array)$route->getDefault('middleware');
+        $toRun       = [];
 
         foreach ($middlewares as $middleware) {
             if (class_exists($middleware)) {
@@ -50,7 +50,7 @@ class UrlMatchedMiddlewareSubscriber implements EventSubscriberInterface
                     throw new InvalidMiddlewareClassException(sprintf("%s is not a valid middleware class. Make sure it implements %s.", $middleware, Middleware::class));
                 }
 
-                sys()->setMiddleware($middleware, $middleware);
+                $toRun[] = $this->getMiddleware($middleware);
 
                 continue;
             }
@@ -59,7 +59,28 @@ class UrlMatchedMiddlewareSubscriber implements EventSubscriberInterface
                 throw new InvalidMiddlewareClassException(sprintf("%s is not a valid middleware class.", $middleware, Middleware::class));
             }
 
-            sys()->setMiddleware($middleware, $middleware);
+            $toRun[] = $this->getMiddleware($middleware);
         }
+
+        Onion::run(
+             $toRun,
+             $event->getRequest()
+        );
+    }
+
+    /**
+     * Ensure to get the middleware class
+     *
+     * @param $middleware
+     *
+     * @return Middleware
+     */
+    private function getMiddleware($middleware): Middleware
+    {
+        if (is_object($middleware)) {
+            return $middleware;
+        }
+
+        return new $middleware;
     }
 }
