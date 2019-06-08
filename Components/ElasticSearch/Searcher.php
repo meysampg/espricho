@@ -72,7 +72,13 @@ class Searcher implements SearchInterface
      */
     public function searchFor(SearchConditionInterface $searchable): array
     {
-        // TODO: Implement searchFor() method.
+        $params = [
+             'index' => $searchable->getIndex(),
+             'type'  => '_doc',
+             'body'  => $searchable->build(),
+        ];
+
+        return $this->getClient()->search($params);
     }
 
     /**

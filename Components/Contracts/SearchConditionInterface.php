@@ -10,5 +10,17 @@ namespace Espricho\Components\Contracts;
  */
 interface SearchConditionInterface
 {
+    /**
+     * The index of searchable interface
+     *
+     * @return string
+     */
+    public function getIndex(): string;
 
+    /**
+     * Return an array of elastic search query conditions
+     *
+     * @return array
+     */
+    public function build(): array;
 }
