@@ -7,6 +7,7 @@ use Espricho\Components\Contracts\KernelInterface;
 use Espricho\Components\Contracts\SearchEngineInterface;
 use Espricho\Components\Providers\AbstractServiceProvider;
 use Espricho\Components\ElasticSearch\Commands\ESInformationCommand;
+use Espricho\Components\ElasticSearch\Commands\ESSyncDatabaseCommand;
 use Espricho\Components\ElasticSearch\Commands\CreateESMappingCommand;
 
 /**
@@ -27,5 +28,6 @@ class ElasticCommandsProvider extends AbstractServiceProvider
     {
         $system->get(KernelInterface::class)->add(new ESInformationCommand);
         $system->get(KernelInterface::class)->add(new CreateESMappingCommand);
+        $system->get(KernelInterface::class)->add(new ESSyncDatabaseCommand);
     }
 }
