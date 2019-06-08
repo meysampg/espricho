@@ -43,7 +43,7 @@ class CreateUserCommand extends Command
                   'e',
                   InputOption::VALUE_REQUIRED,
                   'Email of the user',
-                  null
+                  false
              )
              ->addOption(
                   'is-admin',
@@ -59,7 +59,7 @@ class CreateUserCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if ($input->hasOption('email') && !filter_var($input->getOption('email'), FILTER_VALIDATE_EMAIL)) {
+        if ($input->getOption('email') && !filter_var($input->getOption('email'), FILTER_VALIDATE_EMAIL)) {
             $output->writeln(sprintf('<error>%s</error> is not a valid email.', $input->getOption('email')));
 
             return 1;

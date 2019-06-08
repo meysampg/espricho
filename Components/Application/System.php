@@ -16,9 +16,7 @@ use Espricho\Components\Http\Exceptions\InvalidMiddlewareClassException;
 use function is_a;
 use function sprintf;
 use function in_array;
-use function realpath;
 use function is_string;
-use function str_replace;
 
 /**
  * Class System provides the operation system functionality. It provides the
