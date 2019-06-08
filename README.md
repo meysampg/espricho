@@ -10,7 +10,7 @@ Espricho is heavily inspired from [Laravel](http://laravel.com/)
 and [Yii2](http://yiiframework.com/). Its modularity is similar to
 Yii2 but thanks to the Symfony DI container, it has
 a powerful container like Laravel! Espricho is the Persian name of 
-swallow bird (in Kermani Dialect).
+swallow bird (in Kermani dialect).
 
 ## Mafsho
 `mafsho` is a command line tool which provide a lot of functionality
@@ -23,7 +23,9 @@ Espricho has a structure like this:
 ├── Bootstrap
 ├── Components
 ├── Configs
+├── Console
 ├── Controllers
+├── Databases
 ├── mafsho
 ├── Models
 ├── Modules
@@ -32,18 +34,45 @@ Espricho has a structure like this:
 ```
 We talk about each one in continue.
 
-## Database Configurations
-The database configuration should be set on `db.yaml` on `Configs`
-folder of project's root. A sample for its content is similar
-to this:
+## Configurations VS Environmental Variables
+Espricho supports definition of environmental variables (variables which are
+depended on the running environment). You should put them on `.env` (or `.env.dist` 
+which `dist` is an application stage) file. It's a good idea if all keys on the `.env`
+file be upper case and start with the section name. For example, all ElasticSearch keys
+starts with `ELASTICSEARCH_` prefix. 
+
+On other side, you can define application
+level configurations in the `Config/*.yaml` files. Finally both of this 
+configurations are accessible from `sys()->getConfig('dot.notationed.key', 'default')`.
+
+### sys.yaml
+On `sys.yaml` file, you could set the boot parameters of the system. As the 
+main result, you could define system module loaders under the `loader` key.
 ```yaml
-db:
-  driver: mysql
-  host: localhost
-  port: 3306
-  username: root
-  password: toor
-  database: espricho
+sys:
+  name: Espricho
+  version: 1.0
+  max_log_files: 10
+  loader: 
+    - auth
+    - db
+    - modules
+    - redis
+    - elasticsearch
+```
+
+### Database Configurations
+The database configuration should be set on `.env` the root of the project. 
+A sample for its content is similar
+to this:
+```dotenv
+# Database Configurations
+DB_DRIVER=mysql
+DB_HOST=localhost
+DB_PORT=3306
+DB_USERNAME=root
+DB_PASSWORD=root
+DB_DATABASE=db_name
 ```
 
 ## Modules

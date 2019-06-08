@@ -1,6 +1,6 @@
 sys:
   name: Espricho
-  version: 0.1
+  version: 1.0
   max_log_files: 10
   loader: # make sure there are some files with this name on the configs folder
     - auth # for example the configs of auth must be under the auth section
