@@ -80,12 +80,12 @@ class Onion implements Middleware
 
         /** @var $middleware Middleware */
         foreach ($this->layers as $middleware) {
-            $core = function (Request $request, callable $next) use ($middleware, $core) {
-                return $next($request, $middleware->handle($request, $core));
+            $core = function (Request $request) use ($middleware, $core) {
+                return $middleware->handle($request, $core);
             };
         }
 
-        return $core($request, $next);
+        return $core($request);
     }
 
     /**
