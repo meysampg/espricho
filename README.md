@@ -1,4 +1,6 @@
-# Espricho [WIP]
+# Espricho [ABANDONED]
+🟥⚠️ _THIS PACKAGE IS ABANDONED. PLEASE SELECT ANOTHER PACKAGE OR FORK THIS REPOSITORY AND INFORM ME ON p.g.meysam [at] Gmail [dot] com TO REFER TO YOUR PACKAGE IN PACKAGIST_ ⚠️🟥
+
 [![Maintainability](https://api.codeclimate.com/v1/badges/b3022c87609aaee11faa/maintainability)](https://codeclimate.com/github/meysampg/espricho/maintainability)
 
 Espricho is a lightwieght framework for php7, based on 
